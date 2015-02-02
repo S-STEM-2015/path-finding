@@ -17,6 +17,9 @@ git clone https://github.com/Username-or-Organization/Repository-Name.git
 # Change directory to the repository
 cd Repository-Name
 
+# Make sure the directory is up-to-date
+git pull 
+
 # You are now ready to add and edit files. To commit changes:
 git add .
 git commit -m "description of change"
