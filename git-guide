@@ -1,0 +1,33 @@
+# Guide compiled by Wilton Latham (wlatham)
+
+# First, in a POSIX compliant terminal, change directory to the desired 
+# repository holding path like so:
+
+cd $HOME && mkdir .git
+cd .git
+
+# Initializee the local directory as a git resopsotory 
+git init 
+
+# Next, clone a git repsitory, using its url, like so:  
+# ex. "git clone https://github.com/TeamBlood/Path-Finding.git"
+git clone https://github.com/Username-or-Organization/Repository-Name.git
+
+
+# Change directory to the repository
+cd Repository-Name
+
+# Make sure the directory is up-to-date
+git pull 
+
+# You are now ready to add and edit files. To commit changes:
+git add .
+git commit -m "description of change"
+git push origin master
+
+
+# To checkout a branch repository...
+git remote show origin
+git remote update
+git fetch 
+git checkout -t origin/branch-name
