@@ -1,70 +1,29 @@
-import java.util.Random;
+import java.util.ArrayList;
 
-public class Dungeon {
-	
-	private int width;
-	private int height;
-	
-	// Eventually... change the array type to object!
-	private int[][] dungeon;
-	
-	
-	public Dungeon(int width, int height)
-	{
-		this.width = width;
-		this.height = height;
-		dungeon = new int[width][height];
-		
-		for (int i = 0; i < dungeon.length; i++)
-		{
-			for (int j = 0; j < dungeon[i].length; j++)
-			{
-				dungeon[i][j] = 0;
-			}
-		}
-	}
+/*
+ * This class should create the dungeon by matching tiles
+ * of various properties.
+ * 
+ *   @author Wilton Latham, et. al.
+ *   @version 1.0
+ */
+public class Dungeon
+{
+    private ArrayList<SeedTile> board;
+    
+    public Dungeon()
+    {
+        board = new ArrayList<SeedTile>();
+        
+    }
 
-	public void generateDungeon(int wid, int hei)
-	{
-		
-		
-		for (int i = wid; i < dungeon.length; i++)
-		{
-			for (int j = hei; j < dungeon[i].length; j++)
-			{
+    public ArrayList<SeedTile> getBoard()
+    {
+        return board;
+    }
 
-				
-					dungeon[i][wid] = 1;
-					dungeon[wid][j] = 1;
-					dungeon[dungeon.length - 1][j] = 1;
-					dungeon[i][dungeon[i].length - 1] = 1;
-					
-
-			}
-			
-
-		}
-		
-	    if (wid < 3)
-	    {
-		     generateDungeon(wid + 2, hei);
-	    }
-		
-	}
-	public void printDungeon()
-	{
-		for (int[] val0 : dungeon)
-		{
-			for (int val : val0)
-			{
-				System.out.print(val + " ");
-			}
-			System.out.println();
-		}
-	}
-	
-	public void populateDungeon()
-	{
-		
-	}
+    public void setBoard(ArrayList<SeedTile> board)
+    {
+        this.board = board;
+    }
 }
