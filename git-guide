@@ -10,10 +10,12 @@ cd .git
 git init 
 
 # Next, clone a git repsitory, using its url, like so:  
-git clone https://github.com/Username-or-Organization/RepositoryName.git
+# ex. "git clone https://github.com/TeamBlood/Path-Finding.git"
+git clone https://github.com/Username-or-Organization/Repository-Name.git
+
 
 # Change directory to the repository
-cd /RepositoryName
+cd Repository-Name
 
 # You are now ready to add and edit files. To commit changes:
 git add .
