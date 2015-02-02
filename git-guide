@@ -10,7 +10,9 @@ cd .git
 git init 
 
 # Next, clone a git repsitory, using its url, like so:  
+# ex. "git clone https://github.com/TeamBlood/Path-Finding.git"
 git clone https://github.com/Username-or-Organization/RepositoryName.git
+
 
 # Change directory to the repository
 cd /RepositoryName
