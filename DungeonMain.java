@@ -1,7 +1,7 @@
 
 public class DungeonMain {
-
-	public static void main(String[] args)
+    
+    public static void main(String[] args)
 	{
 
 		System.out.println(";@#                              ;                                                          ,        ';                 @@`         ");                                                       
@@ -32,10 +32,10 @@ public class DungeonMain {
 		System.out.println(":@@:           @@@@   @@@                                                                             .@@'      @,          ;@@@,                                                          "); 
 		System.out.println("#@#             .@;   .'@                                                                             ``        .             ,@                                         "); 
 		System.out.println();	
-		Dungeon dun = new Dungeon(10,10);
-		dun.generateDungeon(0, 0);
-
-		dun.printDungeon();
+		
+		//Dungeon marseille = new Dungeon();
+		SeedTile seed = new SeedTile();
+		seed.printTile(seed.getTlTile());
 	}
 
 
