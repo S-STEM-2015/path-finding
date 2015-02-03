@@ -1,16 +1,18 @@
 
+import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
  
-public class GUI {
+public class trialrun {
     final static boolean shouldFill = true;
     final static boolean shouldWeightX = true;
     final static boolean RIGHT_TO_LEFT = false;
@@ -29,7 +31,7 @@ public class GUI {
     
         addEnemyStats(c, pane);
         
-        addGrid(c, pane, 5, 5);
+        addGrid(c, pane, 25, 25);
     }
     
     public static void addPathButton(GridBagConstraints c, Container pane)
@@ -61,11 +63,18 @@ public class GUI {
         c.gridwidth = 2;
         c.gridx = 0;
         c.gridy = 1;
-        panel.setLayout(new GridLayout(5,5));
+        panel.setLayout(new GridLayout(height, width));
         
         pane.add(panel, c);
-        
-        panel.add(new JButton("Test"));
+        for(int i = 0; i < height; i++)
+        {
+            for(int j = 0; j < width; j++)
+            {
+                JPanel subpanel = new JPanel();
+                subpanel.setBorder(BorderFactory.createLineBorder(Color.black));
+                panel.add(subpanel);
+            }
+        }
         
     }
     
