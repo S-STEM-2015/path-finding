@@ -49,7 +49,7 @@ public class trialrun {
 
     JPanel pan = new JPanel();
     ImageIcon icon = new ImageIcon("image/person.jpg","User");
-    JLabel label = new JLabel(icon,JLabel.LEFT);
+    JLabel label = new JLabel(icon);
     JLabel label2 = new JLabel("NAME",JLabel.CENTER);
     pan.setBorder(new LineBorder(Color.BLACK));
     pan.setPreferredSize( new Dimension( 300,70 ) );
@@ -58,7 +58,7 @@ public class trialrun {
     
     JPanel pan1 = new JPanel();
     icon = new ImageIcon("image/plus.jpg","Health");
-    label = new JLabel(icon,JLabel.LEFT);
+    label = new JLabel(icon);
     label2 = new JLabel("Health");
     pan1.setBorder(new LineBorder(Color.BLACK));
     pan1.setPreferredSize( new Dimension( 300,70 ) );
@@ -67,7 +67,7 @@ public class trialrun {
     
     JPanel pan2 = new JPanel();
     icon = new ImageIcon("image/Diamond-Sword-icon.png","Attack");
-    label = new JLabel(icon,JLabel.LEFT);
+    label = new JLabel(icon);
     label2 = new JLabel("Attack");
     pan2.setBorder(new LineBorder(Color.BLACK));
     pan2.setPreferredSize( new Dimension( 300,70 ) );
@@ -76,7 +76,7 @@ public class trialrun {
     
     JPanel pan3 = new JPanel();
     icon = new ImageIcon("image/shield.png","Defense");
-    label = new JLabel(icon,JLabel.LEFT);
+    label = new JLabel(icon);
     label2 = new JLabel("Defense");
     pan3.setBorder(new LineBorder(Color.BLACK));
     pan3.setPreferredSize( new Dimension( 300,70 ) );
@@ -97,36 +97,36 @@ public class trialrun {
     c.gridx = 1;
     c.gridy = 2;
 
-    pan = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    pan = new JPanel();
     icon = new ImageIcon("image/villian1.gif","Enemy");
-    label = new JLabel(icon,JLabel.LEFT);
-    label2 = new JLabel("NAME",JLabel.CENTER);
+    label = new JLabel(icon);
+    label2 = new JLabel("NAME");
     pan.setBorder(new LineBorder(Color.BLACK));
     pan.setPreferredSize( new Dimension( 300,70 ) );
     pan.add(label);
     pan.add(label2);
     
-    pan1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    pan1 = new JPanel();
     icon = new ImageIcon("image/plus.jpg","Health");
-    label = new JLabel(icon,JLabel.LEFT);
+    label = new JLabel(icon);
     label2 = new JLabel("Health");
     pan1.setBorder(new LineBorder(Color.BLACK));
     pan1.setPreferredSize( new Dimension( 300,70 ) );
     pan1.add(label);
     pan1.add(label2);
     
-    pan2 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    pan2 = new JPanel();
     icon = new ImageIcon("image/Diamond-Sword-icon.png","Attack");
-    label = new JLabel(icon,JLabel.LEFT);
+    label = new JLabel(icon);
     label2 = new JLabel("Attack");
     pan2.setBorder(new LineBorder(Color.BLACK));
     pan2.setPreferredSize( new Dimension( 300,70 ) );
     pan2.add(label);
     pan2.add(label2);
     
-   pan3 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    pan3 = new JPanel();
     icon = new ImageIcon("image/shield.png","Defense");
-    label = new JLabel(icon,JLabel.LEFT);
+    label = new JLabel(icon);
     label2 = new JLabel("Defense");
     pan3.setBorder(new LineBorder(Color.BLACK));
     pan3.setPreferredSize( new Dimension( 300,70 ) );
