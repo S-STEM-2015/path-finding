@@ -1,68 +1,92 @@
 
+import java.awt.ComponentOrientation;
+import java.awt.Container;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
  
-import java.awt.*;
-import javax.swing.*;
- 
-public class trialrun {
+public class GUI {
     final static boolean shouldFill = true;
     final static boolean shouldWeightX = true;
     final static boolean RIGHT_TO_LEFT = false;
  
-    public static void addComponentsToPane(Container pane) {
-        if (RIGHT_TO_LEFT) {
-            pane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-        }
+    public static void addComponentsToPane(Container pane) 
+    {
+        pane.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
  
-    JButton button;
-    pane.setLayout(new GridBagLayout());
-    GridBagConstraints c = new GridBagConstraints();
+        addPathButton(c, pane);
+        
+        addRestartButton(c, pane);
+        
+        addPlayerStats(c, pane);
     
-    if (shouldFill) {
-    //natural height, maximum width
-    c.fill = GridBagConstraints.HORIZONTAL;
+        addEnemyStats(c, pane);
+        
+        addGrid(c, pane, 5, 5);
     }
- 
-    button = new JButton("Show Best Path");
-    if (shouldWeightX) {
-    c.weightx = 0.5;
+    
+    public static void addPathButton(GridBagConstraints c, Container pane)
+    {
+        JButton button = new JButton("Show Best Path");
+        c.weightx = 0.5;
+        c.ipady = 50;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = 0;
+        pane.add(button, c);
     }
-    c.ipady = 50;
-    c.fill = GridBagConstraints.HORIZONTAL;
-    c.gridx = 0;
-    c.gridy = 0;
-    pane.add(button, c);
- 
-    button = new JButton("Restart");
-    c.fill = GridBagConstraints.HORIZONTAL;
-    c.ipady = 50;
-    c.gridx = 1;
-    c.gridy = 0;
-    pane.add(button, c);
-    button = new JButton("Player Stat:");
-    c.fill = GridBagConstraints.BOTH;
-    c.ipady = 250;
-    c.gridx = 0;
-    c.gridy = 2;
-    pane.add(button, c);
     
-    button = new JButton("Enemy Stats:");
-    c.fill = GridBagConstraints.BOTH;
-    c.ipady = 250;
-    c.gridx = 1;
-    c.gridy = 2;
-    pane.add(button, c);
- 
-    button = new JButton("Grid");
-    c.fill = GridBagConstraints.BOTH;
-    c.weighty = 1.0;
-    c.gridwidth = 2;
-    c.gridx = 0;
-    c.gridy = 1;
-    pane.add(button, c);
+    public static void addRestartButton(GridBagConstraints c, Container pane)
+    {
+        JButton button = new JButton("Restart");
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.ipady = 50;
+        c.gridx = 1;
+        c.gridy = 0;
+        pane.add(button, c);
+    }
     
-
+    public static void addGrid(GridBagConstraints c, Container pane, int height, int width)
+    {
+        JPanel panel = new JPanel();
+        c.fill = GridBagConstraints.BOTH;
+        c.weighty = 1.0;
+        c.gridwidth = 2;
+        c.gridx = 0;
+        c.gridy = 1;
+        panel.setLayout(new GridLayout(5,5));
+        
+        pane.add(panel, c);
+        
+        panel.add(new JButton("Test"));
+        
+    }
     
+    public static void addPlayerStats(GridBagConstraints c, Container pane)
+    {
+        JButton button = new JButton("Player Stat:");
+        c.fill = GridBagConstraints.BOTH;
+        c.ipady = 250;
+        c.gridx = 0;
+        c.gridy = 2;
+        pane.add(button, c);
+    }
     
+    public static void addEnemyStats(GridBagConstraints c, Container pane)
+    {
+        JButton button = new JButton("Enemy Stats:");
+        c.fill = GridBagConstraints.BOTH;
+        c.ipady = 250;
+        c.gridx = 1;
+        c.gridy = 2;
+        pane.add(button, c);
     }
  
     /**
