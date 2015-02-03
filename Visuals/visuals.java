@@ -1,3 +1,9 @@
+/* cd $HOME/git/Preston/Path-Finding/Visuals
+ * git add .
+ * git commit -m 'description of change'
+ * git push origin HEAD:Preston
+ * 
+ */
 import java.util.ArrayList;
 import java.util.Random;
 public class Visuals
