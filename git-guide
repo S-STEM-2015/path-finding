@@ -1,4 +1,4 @@
-#Anothr Git-Guide compiled by Wilton Latham (wlatham)
+# Another Git-Guide by Wilton Latham (wlatham)
 
 # First, in a POSIX compliant terminal, change directory to the desired 
 # repository holding path like so:
@@ -6,7 +6,7 @@
 cd $HOME && mkdir .git
 cd .git
 
-# Initializee the local directory as a git resopsotory 
+# Initialize the local directory as a git resopsitory 
 git init 
 
 # Next, clone a git repsitory, using its url, like so:  
