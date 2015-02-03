@@ -11,10 +11,28 @@ public class Dungeon implements SeedTile
 {
     private ArrayList<int[][]> board = new ArrayList<int[][]>();
     
+    /*
+     * This constructor fills the 'board' ArrayList.
+     */
     public Dungeon()
     { 
         board.add(TLTILE);
-        
+        for (int x = 0; x < 3; x++)
+        {
+            board.add(TLTILE);
+        }
+        board.add(TRTILE);
+        for (int x = 0; x < 15; x++)
+        {
+            board.add(TLTILE);
+        }
+        board.add(BLTILE);
+        for (int x = 0; x < 3; x++)
+        {
+            board.add(TLTILE);
+        }
+        board.add(BRTILE);
+
     }
 
     public ArrayList<int[][]> getBoard()
@@ -51,8 +69,12 @@ public class Dungeon implements SeedTile
         {
             for (int j = 0; j < SIZE; j++)
             {
-                tile = board.get(0);
-                System.out.print(tile[i][j] + " ");
+                
+                for (int x = 0; x < SIZE; x++)
+                {
+                    tile = board.get(j);
+                    System.out.print(tile[i][x] + " ");
+                }
             }
             System.out.println();
         }
