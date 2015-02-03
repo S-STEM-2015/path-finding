@@ -1,4 +1,6 @@
-public class BranchTile extends SeedTile
+
+
+public class BranchTile implements SeedTile
 {
     private int[][] tile;
     
