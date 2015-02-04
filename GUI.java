@@ -12,10 +12,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
  
-public class trialrun {
+public class GUI {
     final static boolean shouldFill = true;
     final static boolean shouldWeightX = true;
     final static boolean RIGHT_TO_LEFT = false;
+    public static JPanel panel;
  
     public static void addComponentsToPane(Container pane) 
     {
@@ -31,7 +32,7 @@ public class trialrun {
     
         addEnemyStats(c, pane);
         
-        addGrid(c, pane, 25, 25);
+        addGrid(c, pane, 10, 10);
     }
     
     public static void addPathButton(GridBagConstraints c, Container pane)
@@ -57,7 +58,7 @@ public class trialrun {
     
     public static void addGrid(GridBagConstraints c, Container pane, int height, int width)
     {
-        JPanel panel = new JPanel();
+        panel = new JPanel();
         c.fill = GridBagConstraints.BOTH;
         c.weighty = 1.0;
         c.gridwidth = 2;
@@ -75,6 +76,7 @@ public class trialrun {
                 panel.add(subpanel);
             }
         }
+        
         
     }
     
@@ -97,6 +99,13 @@ public class trialrun {
         c.gridy = 2;
         pane.add(button, c);
     }
+    
+    public static void changeColor(int x, int y,int length, Color c)
+    {
+        int n = ((x * length) - 1) + y;
+        panel.getComponent(n).setBackground(c);
+        panel.getComponent(10).setBackground(Color.RED);
+    }
  
     /**
      * Create the GUI and show it.  For thread safety,
@@ -105,7 +114,7 @@ public class trialrun {
      */
     private static void createAndShowGUI() {
         //Create and set up the window.
-        JFrame frame = new JFrame("GridBagLayoutDemo");
+        JFrame frame = new JFrame("name to be determined");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800,1000);
         //Set up the content pane.
