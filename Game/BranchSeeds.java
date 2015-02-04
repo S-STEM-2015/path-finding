@@ -1,10 +1,10 @@
 
 
-public class BranchTile implements SeedTile
+public class BranchSeeds implements CornerSeeds
 {
     private int[][] tile;
     
-    public BranchTile()
+    public BranchSeeds()
     { 
         generateTile(0, SIZE);
     }
@@ -63,6 +63,11 @@ public class BranchTile implements SeedTile
         
             tile[tile.length/2][tile[0].length/2] = 8;
         
+    }
+    
+    public int[][] getSeed()
+    {
+        return null;
     }
     
     /*

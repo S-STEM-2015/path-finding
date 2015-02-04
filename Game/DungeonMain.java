@@ -18,7 +18,7 @@ public class DungeonMain {
     {
         //showSplashScreen();
 		Dungeon marseille = new Dungeon();
-		marseille.printTile(SeedTile.TLTILE);
+		marseille.printTile(CornerSeeds.TLTILE);
 		System.out.println();
 		marseille.printBoard(marseille.getBoard());
 	}

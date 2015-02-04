@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * @author Wilton Latham, et. al.
  * @version 0.1
  */
-public class Dungeon implements SeedTile
+public class Dungeon implements CornerSeeds
 {
     private ArrayList<int[][]> board = new ArrayList<int[][]>();
     
