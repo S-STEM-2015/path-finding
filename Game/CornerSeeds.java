@@ -42,6 +42,13 @@ interface CornerSeeds {
          {1,1,1,1,0},
          {0,0,0,0,0}};
         
+        static final int[][] BLANKTILE = 
+        {{0,0,0,0,0},
+         {0,0,0,0,0},
+         {0,0,0,0,0},
+         {0,0,0,0,0},
+         {0,0,0,0,0}};   
+        
         // Standardized size for every board and tile.
         static final int SIZE = 5;
     }
