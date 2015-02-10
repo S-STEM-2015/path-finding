@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 /*
  * This class should create the dungeon by matching tiles
@@ -11,12 +12,17 @@ public class Dungeon implements CornerSeeds
 {
     //Simply put, this is an ArrayList of Board Tiles/Seeds.
     private ArrayList<ArrayList<int[][]>> board = new ArrayList<ArrayList<int[][]>>();   
+    private Visuals tileRegistry = new Visuals();
+    private Random randomVal = new Random();
+    private ArrayList<int[][]> maps;
 
     /*
      * This constructor fills the 'board' ArrayList.
      */
     public Dungeon()
     { 
+        maps = tileRegistry.getMaps();
+        tileRegistry.AssignMaps(10);
         for (int x = 0; x < 5; x++)
         {
             board.add(new ArrayList<int[][]>());
@@ -90,7 +96,15 @@ public class Dungeon implements CornerSeeds
             {
                 for (int x = 0; x < SIZE; x++)
                 {
-                    tile = board.get(q).get(j);
+                    if (board.get(q).get(j).equals(BLANKTILE))
+                    {
+                            tile = maps.get(randomVal.nextInt(9));
+                    }
+                    else
+                    {
+                        tile = board.get(q).get(j);
+                    }
+                    
                     System.out.print(tile[i][x] + " ");
                 }
             }
