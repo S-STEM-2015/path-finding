@@ -1,4 +1,4 @@
-/* cd $HOME/Dropbox/Pathfinding/Path-Finding/    <-- Your path to the Preston branch on your mac, supposedly.
+/* cd $HOME/git/Preston/Path-Finding/Visuals
  * git add .
  * git commit -m 'description of change'
  * git push origin HEAD:Preston
