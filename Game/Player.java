@@ -3,6 +3,7 @@ import java.awt.Color;
 
 public class Player implements Entity
 {
+    String name;
     int health;
     int AD;
     int AP;
@@ -11,6 +12,16 @@ public class Player implements Entity
     Color c;
     int mana;
 
+    public Player()
+    {
+        health = 100;
+	AD = 10;
+	AP = 0;
+	armor = 0;
+	MR = 0;
+	c = Color.BLUE;
+	mana = 100;
+    }
     @Override
     public int getHealth()
     {
