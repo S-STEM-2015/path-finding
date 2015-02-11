@@ -87,6 +87,8 @@ public class Dungeon implements CornerSeeds
     {
         this.board = board;
         int[][] tile;
+        boolean first = true;
+        boolean first2 = true;
   
      for (int q = 0; q < SIZE; q++)
      {
@@ -105,11 +107,32 @@ public class Dungeon implements CornerSeeds
                         tile = board.get(q).get(j);
                     }
                     
-                    System.out.print(tile[i][x] + " ");
+                    //Fills edges with zeroes.
+                    if (i == 0 && first)
+                    {
+                        System.out.print(0 + " ");
+                    } 
+                    else if (x == 0 || x == SIZE - 1)
+                    {
+                        System.out.print(0 + " ");
+                    }
+                    else if (i == SIZE - 1 && q == SIZE - 1)
+                    {
+                        System.out.print(0 + " ");
+                    }
+                    //This will proceed to print the map.
+                    else
+                    {
+                        System.out.print(tile[i][x] + " ");
+                    }
+                    
+                    
                 }
             }
             System.out.println();
         }
+        first = false;
       }
+     
     }   
 }
