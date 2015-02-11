@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Guide compiled by Wilton Latham (wlatham)
 
 # First, in a POSIX compliant terminal, change directory to the desired 
@@ -31,3 +32,42 @@ git remote show origin
 git remote update
 git fetch 
 git checkout -t origin/branch-name
+=======
+# Another Git-Guide (for Path-Finding) by wlatham
+
+# First, in a POSIX-compliant terminal, change directory to the desired 
+# repository holding path like so:
+cd $HOME && mkdir .git
+cd .git
+
+# Initialize the local directory as a git resopsitory.
+git init 
+
+# Next, clone a git repsitory, using its url, like so:  
+git clone https://github.com/TeamBlood/Path-Finding.git
+
+
+# Change directory to the repository.
+cd Path-Finding
+
+# Synchronize local directory with your branch.
+git remote show origin
+git remote update
+git fetch 
+git checkout -t origin/Your-First-Name
+
+# Make sure the directory is up-to-date.
+git pull 
+
+# You are now ready to add and edit files. 
+
+# To append changes:
+git add .
+
+# To commit changes (only when satisfied with changes!):
+git commit -m "description of change"
+
+# To push changes, which should also prompt a github login:
+git push origin HEAD:Your-First-Name
+
+>>>>>>> master
