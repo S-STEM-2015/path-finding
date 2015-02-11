@@ -1,7 +1,7 @@
 import java.awt.Color;
 
 
-public class Player implements Entity
+public class Monster implements Entity
 {
     String name;
     int health;
@@ -12,7 +12,7 @@ public class Player implements Entity
     Color c;
     int mana;
 
-    public Player()
+    public Monster()
     {
         health = 100;
 	AD = 10;
