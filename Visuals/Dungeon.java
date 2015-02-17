@@ -15,6 +15,7 @@ public class Dungeon implements CornerSeeds
     private Visuals tileRegistry = new Visuals();
     private Random randomVal = new Random();
     private ArrayList<int[][]> maps;
+    private int[][] dungeon;
 
     /*
      * This constructor fills the 'board' ArrayList.
@@ -23,6 +24,7 @@ public class Dungeon implements CornerSeeds
     { 
         maps = tileRegistry.getMaps();
         tileRegistry.AssignMaps(10);
+        dungeon = new int[25][25];
         for (int x = 0; x < 5; x++)
         {
             board.add(new ArrayList<int[][]>());
@@ -80,59 +82,72 @@ public class Dungeon implements CornerSeeds
             System.out.println();
         }
     }
+    public void generateDungeon()
+    {
+    	 int[][] tile;
+         boolean first = true;
+
+      for (int q = 0; q < SIZE; q++)
+      {
+         for (int i = 0; i < SIZE; i++)
+         {
+             for (int j = 0; j < SIZE; j++)
+             {
+                 for (int x = 0; x < SIZE; x++)
+                 {
+                     if (board.get(q).get(j).equals(BLANKTILE))
+                     {
+                             tile = maps.get(randomVal.nextInt(9));
+                     }
+                     else
+                     {
+                        tile = board.get(q).get(j);
+                     }
+                     
+                     //Fills edges with zeroes.
+                     if (i == 0 && first)
+                     {
+                         System.out.print(0 + " ");
+                     } 
+                     else if (i == SIZE - 1 && q == SIZE - 1)
+                     {
+                     	System.out.print(0 + " ");
+                     }
+                     else if (x == 0 && j == 0)
+                     {
+                     	System.out.print(0 + " ");
+                     }
+                     else if (x == SIZE -1 && j == SIZE -1)
+                     {
+                     	System.out.print(0 + " ");
+                     }
+                     //This will proceed to print the map.
+                     else
+                     {
+                         System.out.print(tile[i][x] + " ");
+                     }
+                     
+                     
+                 }
+             }
+             System.out.println();
+         }
+         first = false;
+       }
+    }
+    
+    public String toString()
+    {
+    	return null;
+    }
+    
     /*
      * This method will only print a single tile for now.
      */
-    public void printBoard(ArrayList<ArrayList<int[][]>> board)
+    public int[][] getDungeon()
     {
-        this.board = board;
-        int[][] tile;
-        boolean first = true;
-        boolean first2 = true;
-  
-     for (int q = 0; q < SIZE; q++)
-     {
-        for (int i = 0; i < SIZE; i++)
-        {
-            for (int j = 0; j < SIZE; j++)
-            {
-                for (int x = 0; x < SIZE; x++)
-                {
-                    if (board.get(q).get(j).equals(BLANKTILE))
-                    {
-                            tile = maps.get(randomVal.nextInt(9));
-                    }
-                    else
-                    {
-                        tile = board.get(q).get(j);
-                    }
-                    
-                    //Fills edges with zeroes.
-                    if (i == 0 && first)
-                    {
-                        System.out.print(0 + " ");
-                    } 
-                    else if (x == 0 || x == SIZE - 1)
-                    {
-                        System.out.print(0 + " ");
-                    }
-                    else if (i == SIZE - 1 && q == SIZE - 1)
-                    {
-                        System.out.print(0 + " ");
-                    }
-                    //This will proceed to print the map.
-                    else
-                    {
-                        System.out.print(tile[i][x] + " ");
-                    }
-                    
-                    
-                }
-            }
-            System.out.println();
-        }
-        first = false;
-      }
+     
+     return dungeon;
      
     }   
 }

@@ -30,7 +30,7 @@
                 {
                     for (int j = 1; j < map[i].length - 1; j++)
                     {
-                        map[i][j] = r.nextInt(2);
+                    		map[i][j] = r.nextInt(2);
                     }
                 }
                 for (int i = 1; i < map.length - 1; i++)
