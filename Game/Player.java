@@ -22,88 +22,99 @@ public class Player implements Entity
 	c = Color.BLUE;
 	mana = 100;
     }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(String name)
+    {
+	this.name = name;
+    }
+
     @Override
     public int getHealth()
     {
-        return 0;
+        return health;
     }
 
     @Override
     public void setHealth(int health)
     { 
-        
+        this.health = health;
     }
 
     @Override
     public int getAD()
     {         
-        return 0;
+        return AD;
     }
 
     @Override
     public void setAD(int AD)
     {         
-        
+        this.AD = AD;
     }
 
     @Override
     public int getAP()
     {         
-        return 0;
+        return AP;
     }
 
     @Override
     public void setAP(int AP)
     {         
-        
+        this.AP = AP;
     }
 
     @Override
     public int getArmor()
     {        
-        return 0;
+        return armor;
     }
 
     @Override
     public void setArmor(int armor)
     {    
-        
+        this.armor = armor;
     }
 
     @Override
     public int getMR()
     {    
-        return 0;
+        return MR;
     }
 
     @Override
     public void setMR(int MR)
     {    
-        
+        this.MR = MR;
     }
 
     @Override
-    public int getColor()
+    public Color getColor()
     {    
-        return 0;
+        return c;
     }
 
     @Override
     public void setColor(Color c)
     {    
-        
+        this.c = c;
     }
 
     @Override
     public int getMana()
     {    
-        return 0;
+        return mana;
     }
 
     @Override
     public void setMana(int mana)
     {    
-        
+        this.mana = mana;
     }
 
 }
