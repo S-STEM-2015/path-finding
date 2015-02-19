@@ -19,7 +19,7 @@ public class DungeonMain {
         //showSplashScreen();
 		Dungeon marseille = new Dungeon();
 		System.out.println();
-		marseille.printBoard(marseille.getBoard());
+		System.out.print(marseille.toString());
 	}
 
 
