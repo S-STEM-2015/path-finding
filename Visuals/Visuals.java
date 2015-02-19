@@ -30,10 +30,6 @@ public class Visuals
                         map[i][j] = 1;
                     else
                         map[i][j] = 0;
-                    for (int j = 1; j < map[i].length - 1; j++)
-                    {
-                        map[i][j] = r.nextInt(2);
-                    }
                 }
             }
             map[0][0] = 1;
