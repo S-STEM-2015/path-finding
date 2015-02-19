@@ -18,7 +18,7 @@ public interface Entity
     int getMR();
     void setMR(int MR);
 
-    int getColor();
+    Color getColor();
     void setColor(Color c);
     
     int getMana();
