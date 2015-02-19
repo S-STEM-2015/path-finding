@@ -2,7 +2,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /*
- * This class should create the dungeon by matching tiles
+ * Dungeon.java
+ *
+ * This class generates dungeons by conjugating tiles
  * of various properties.
  * 
  * @author Wilton Latham, et. al.
@@ -10,26 +12,17 @@ import java.util.Random;
  */
 public class Dungeon implements CornerSeeds
 {
-<<<<<<< HEAD
     //Simply put, this is an ArrayList of board Tiles/Seeds.
     private ArrayList<ArrayList<int[][]>> board;  
     private Visuals centerTiles;
     private Random randomVal;
     private int[][] dungeon;
-=======
-    //Simply put, this is an ArrayList of Board Tiles/Seeds.
-    private ArrayList<ArrayList<int[][]>> board = new ArrayList<ArrayList<int[][]>>();   
-    private Visuals tileRegistry = new Visuals();
-    private Random randomVal = new Random();
-    private ArrayList<int[][]> maps;
->>>>>>> master
 
     /*
      * This constructor fills the 'board' ArrayList.
      */
     public Dungeon()
     { 
-<<<<<<< HEAD
         board = new ArrayList<ArrayList<int[][]>>(); 
         centerTiles = new Visuals();
         randomVal = new Random();
@@ -37,10 +30,6 @@ public class Dungeon implements CornerSeeds
         
         centerTiles.AssignMaps(10);
         
-=======
-        maps = tileRegistry.getMaps();
-        tileRegistry.AssignMaps(10);
->>>>>>> master
         for (int x = 0; x < 5; x++)
         {
             board.add(new ArrayList<int[][]>());
@@ -69,6 +58,7 @@ public class Dungeon implements CornerSeeds
                 board.get(x).add(BLANKTILE);
             }
         }
+        generateDungeon();
 
     }
 
@@ -82,36 +72,13 @@ public class Dungeon implements CornerSeeds
         this.board = board;
     }
 
-<<<<<<< HEAD
     public void generateDungeon()
     { 
         //These variables define the indices for 'int[][] dungeon'. 
         int xLim = 0; 
         int yLim = 0; 
-=======
-    // "Print" and "toString" methods are here.
 
->>>>>>> master
-
-    public void printTile(int[][] tile)
-    {
-        for (int i = 0; i < tile.length; i++)
-        {
-            for (int j = 0; j < tile[i].length; j++)
-            {
-                System.out.print(tile[i][j] + " ");
-            }
-            System.out.println();
-        }
-    }
-    /*
-     * This method will only print a single tile for now.
-     */
-    public void printBoard(ArrayList<ArrayList<int[][]>> board)
-    {
-        this.board = board;
         int[][] tile;
-<<<<<<< HEAD
         boolean first = true;
 
         //Vertically traverses between "horizontally" conjugate 25x5 tiles
@@ -119,20 +86,13 @@ public class Dungeon implements CornerSeeds
         {
             //Vertically traverses between rows within "horizontally" conjugate 25x5 tile
             for (int i = 0; i < SIZE; i++)
-=======
-  
-     for (int q = 0; q < SIZE; q++)
-     {
-        for (int i = 0; i < SIZE; i++)
-        {
-            for (int j = 0; j < SIZE; j++)
->>>>>>> master
             {
-                for (int x = 0; x < SIZE; x++)
+                //Horizontally traverses between 5x5 tiles
+                for (int j = 0; j < SIZE; j++)
                 {
-                    if (board.get(q).get(j).equals(BLANKTILE))
+                    //Horizontally traverses indices of 5x5 tiles
+                    for (int x = 0; x < SIZE; x++)
                     {
-<<<<<<< HEAD
                         if (board.get(q).get(j).equals(BLANKTILE))
                         {
                             tile = centerTiles.getMaps().get(randomVal.nextInt(9));
@@ -170,18 +130,9 @@ public class Dungeon implements CornerSeeds
                         {
                             yLim = 0;
                         }
-=======
-                            tile = maps.get(randomVal.nextInt(9));
->>>>>>> master
                     }
-                    else
-                    {
-                        tile = board.get(q).get(j);
-                    }
-                    
-                    System.out.print(tile[i][x] + " ");
+
                 }
-<<<<<<< HEAD
     
                 //Boundary dependent upon change in 'i'
                 xLim++;
@@ -212,11 +163,5 @@ public class Dungeon implements CornerSeeds
     public int[][] getDungeon()
     {
         return dungeon;
-=======
-            }
-            System.out.println();
-        }
-      }
->>>>>>> master
     }   
 }
