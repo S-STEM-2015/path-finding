@@ -2,9 +2,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /*
- * Dungeon.java
- *
- * This class generates dungeons by conjugating tiles
+ * This class should create the dungeon by matching tiles
  * of various properties.
  * 
  * @author Wilton Latham, et. al.
@@ -14,18 +12,17 @@ public class Dungeon implements CornerSeeds
 {
     //Simply put, this is an ArrayList of Board Tiles/Seeds.
     private ArrayList<ArrayList<int[][]>> board = new ArrayList<ArrayList<int[][]>>();   
-    private Visuals centerTiles = new Visuals();
+    private Visuals tileRegistry = new Visuals();
     private Random randomVal = new Random();
     private ArrayList<int[][]> maps;
-    private int[][] dungeon;
 
     /*
      * This constructor fills the 'board' ArrayList.
      */
     public Dungeon()
     { 
-        centerTiles.AssignMaps(10);
-        dungeon = new int[25][25];
+        maps = tileRegistry.getMaps();
+        tileRegistry.AssignMaps(10);
         for (int x = 0; x < 5; x++)
         {
             board.add(new ArrayList<int[][]>());
@@ -54,7 +51,6 @@ public class Dungeon implements CornerSeeds
                 board.get(x).add(BLANKTILE);
             }
         }
-        generateDungeon();
 
     }
 
@@ -72,96 +68,48 @@ public class Dungeon implements CornerSeeds
 
     // "Print" and "toString" methods are here.
 
-    public void generateDungeon()
-    { 
-        // These variables define the indices for 'int[][] dungeon'. 
-        int xLim = 0; 
-        int yLim = 0; 
 
-        int[][] tile;
-        boolean first = true;
-
-        //Vertically traverses between "horizontally" conjugate, 25x5, tiles
-        for (int q = 0; q < SIZE; q++)
+    public void printTile(int[][] tile)
+    {
+        for (int i = 0; i < tile.length; i++)
         {
-            //Vertically traverses between rows within "horizontally" conjugate, 25x5, tile
-            for (int i = 0; i < SIZE; i++)
+            for (int j = 0; j < tile[i].length; j++)
             {
-                //Horizontally traverses between 5x5 tiles
-                for (int j = 0; j < SIZE; j++)
-                {
-                    //Horizontally traverses indices of 5x5 tiles
-                    for (int x = 0; x < SIZE; x++)
-                    {
-                        if (board.get(q).get(j).equals(BLANKTILE))
-                        {
-                            tile = centerTiles.getMaps().get(randomVal.nextInt(9));
-                        }
-                        else
-                        {
-                            tile = board.get(q).get(j);
-                        }
-
-                        //Fills edges with zeroes.
-                        if (i == 0 && first)
-                        {
-                            dungeon[xLim][yLim] = 0;
-                        } 
-                        else if (i == SIZE - 1 && q == SIZE - 1)
-                        {
-                            dungeon[xLim][yLim] = 0;
-                        }
-                        else if (x == 0 && j == 0)
-                        {
-                            dungeon[xLim][yLim] = 0;
-                        }
-                        else if (x == SIZE -1 && j == SIZE -1)
-                        {
-                            dungeon[xLim][yLim] = 0;
-                        }
-                        else
-                        {
-
-                        //System.out.print(tile[i][x] + " ");
-                        dungeon[xLim][yLim] = tile[i][x];
-                        }
-                        //Dependant upon change in x
-                        yLim++;
-                        if (yLim == 25)
-                        {
-                            yLim = 0;
-                        }
-                    }
-
-                }
-                //Dependant upon change in i
-                xLim++;
+                System.out.print(tile[i][j] + " ");
             }
-
-
-
-            first = false;
+            System.out.println();
         }
-    } 
-
-    public String toString()
-    {
-        String total = "";
-        for (int i = 0; i < 25; i++)
-        {
-            for (int j = 0; j < 25; j++)
-            {  
-                total += dungeon[i][j] + " "; 
-            }
-            total += "\n";
-        }
-
-        return total;
     }
-
-    public int[][] getDungeon()
+    /*
+     * This method will only print a single tile for now.
+     */
+    public void printBoard(ArrayList<ArrayList<int[][]>> board)
     {
-
-        return dungeon;
+        this.board = board;
+        int[][] tile;
+  
+     for (int q = 0; q < SIZE; q++)
+     {
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE; j++)
+            {
+                for (int x = 0; x < SIZE; x++)
+                {
+                    if (board.get(q).get(j).equals(BLANKTILE))
+                    {
+                            tile = maps.get(randomVal.nextInt(9));
+                    }
+                    else
+                    {
+                        tile = board.get(q).get(j);
+                    }
+                    
+                    System.out.print(tile[i][x] + " ");
+                }
+            }
+            System.out.println();
+        }
+      }
     }   
 }
