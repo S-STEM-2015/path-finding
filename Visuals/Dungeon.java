@@ -8,15 +8,14 @@ import java.util.Random;
  * of various properties.
  * 
  * @author Wilton Latham, et. al.
- * @version 0.1
+ * @version 1.0
  */
 public class Dungeon implements CornerSeeds
 {
-    //Simply put, this is an ArrayList of Board Tiles/Seeds.
-    private ArrayList<ArrayList<int[][]>> board = new ArrayList<ArrayList<int[][]>>();   
-    private Visuals centerTiles = new Visuals();
-    private Random randomVal = new Random();
-    private ArrayList<int[][]> maps;
+    //Simply put, this is an ArrayList of board Tiles/Seeds.
+    private ArrayList<ArrayList<int[][]>> board;  
+    private Visuals centerTiles;
+    private Random randomVal;
     private int[][] dungeon;
 
     /*
@@ -24,8 +23,13 @@ public class Dungeon implements CornerSeeds
      */
     public Dungeon()
     { 
-        centerTiles.AssignMaps(10);
+        board = new ArrayList<ArrayList<int[][]>>(); 
+        centerTiles = new Visuals();
+        randomVal = new Random();
         dungeon = new int[25][25];
+        
+        centerTiles.AssignMaps(10);
+        
         for (int x = 0; x < 5; x++)
         {
             board.add(new ArrayList<int[][]>());
@@ -58,8 +62,6 @@ public class Dungeon implements CornerSeeds
 
     }
 
-    //Getters and setters for fields are here.
-
     public ArrayList<ArrayList<int[][]>> getBoard()
     {
         return board;
@@ -70,21 +72,19 @@ public class Dungeon implements CornerSeeds
         this.board = board;
     }
 
-    // "Print" and "toString" methods are here.
-
     public void generateDungeon()
     { 
-        // These variables define the indices for 'int[][] dungeon'. 
+        //These variables define the indices for 'int[][] dungeon'. 
         int xLim = 0; 
         int yLim = 0; 
 
         int[][] tile;
         boolean first = true;
 
-        //Vertically traverses between "horizontally" conjugate, 25x5, tiles
+        //Vertically traverses between "horizontally" conjugate 25x5 tiles
         for (int q = 0; q < SIZE; q++)
         {
-            //Vertically traverses between rows within "horizontally" conjugate, 25x5, tile
+            //Vertically traverses between rows within "horizontally" conjugate 25x5 tile
             for (int i = 0; i < SIZE; i++)
             {
                 //Horizontally traverses between 5x5 tiles
@@ -121,11 +121,10 @@ public class Dungeon implements CornerSeeds
                         }
                         else
                         {
-
-                        //System.out.print(tile[i][x] + " ");
-                        dungeon[xLim][yLim] = tile[i][x];
+                            dungeon[xLim][yLim] = tile[i][x];
                         }
-                        //Dependant upon change in x
+                        
+                        //Boundary dependent upon change in 'x'
                         yLim++;
                         if (yLim == 25)
                         {
@@ -134,14 +133,16 @@ public class Dungeon implements CornerSeeds
                     }
 
                 }
-                //Dependant upon change in i
+    
+                //Boundary dependent upon change in 'i'
                 xLim++;
             }
-
-
-
             first = false;
         }
+        
+        //hard coded start/finish points, respectively
+        dungeon[0][1] = 1;
+        dungeon [24][23] = 1;
     } 
 
     public String toString()
@@ -155,13 +156,12 @@ public class Dungeon implements CornerSeeds
             }
             total += "\n";
         }
-
         return total;
     }
 
+    //Getters and setters for fields are here.
     public int[][] getDungeon()
     {
-
         return dungeon;
     }   
 }
