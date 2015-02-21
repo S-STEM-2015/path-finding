@@ -19,7 +19,9 @@ public class DungeonMain {
         //showSplashScreen();
 		Dungeon marseille = new Dungeon();
 		System.out.println();
+		//marseille.rogueMode();
 		System.out.print(marseille.toString());
+		//showSplashScreen();
 	}
 
 
