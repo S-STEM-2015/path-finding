@@ -12,9 +12,16 @@ import java.util.Random;
  */
 public class Dungeon implements CornerSeeds
 {
-    //Simply put, this is an ArrayList of board Tiles/Seeds.
+    /**
+     * Simply put, this is an ArrayList of dungeon Tiles.
+     * 
+     * "You're asking me for Inception.
+     *  I hope you do understand the gravity of that request. " - Cobb, Inception
+     */
     private ArrayList<ArrayList<int[][]>> board;  
+    
     private Visuals centerTiles;
+    private boolean rogueMode;
     private Random randomVal;
     private int[][] dungeon;
 
@@ -72,6 +79,16 @@ public class Dungeon implements CornerSeeds
         this.board = board;
     }
 
+    public void rogueMode()
+    {
+        rogueMode = true;
+    }
+    
+    public void normalMode()
+    {
+        rogueMode = false;
+    }
+
     public void generateDungeon()
     { 
         //These variables define the indices for 'int[][] dungeon'. 
@@ -81,7 +98,7 @@ public class Dungeon implements CornerSeeds
         int[][] tile;
         boolean first = true;
 
-        //Vertically traverses between "horizontally" conjugate 25x5 tiles
+        //Vertically traverses between "horizontally" conjugate 5x25 tiles
         for (int q = 0; q < SIZE; q++)
         {
             //Vertically traverses between rows within "horizontally" conjugate 25x5 tile
@@ -144,21 +161,57 @@ public class Dungeon implements CornerSeeds
         dungeon[0][1] = 1;
         dungeon [24][23] = 1;
     } 
-
+    
     public String toString()
     {
         String total = "";
-        for (int i = 0; i < 25; i++)
-        {
-            for (int j = 0; j < 25; j++)
-            {  
-                total += dungeon[i][j] + " "; 
-            }
-            total += "\n";
-        }
-        return total;
-    }
 
+        if (rogueMode)
+        {
+            for (int i = 0; i < 25; i++)
+            {
+                for (int j = 0; j < 25; j++)
+                {  
+                    if ((i == 0 || i == 24) && dungeon[i][j] != 1)
+                    {
+                        total += "- ";
+                    }    
+                    else if (j == 24 || j == 0 && dungeon[i][j] != 1)
+                    {
+                        total += "| ";
+                    }
+                    else
+                    {
+                        if (dungeon[i][j] == 0)
+                        {
+                            total += "# ";
+                        }
+                        else
+                        {
+                            total += ". ";
+                        }    
+                        //total += dungeon[i][j] + " "; 
+                    }
+                   
+                }   
+                total += "\n";
+            }
+            return total;
+        }
+        else
+        { 
+            for (int i = 0; i < 25; i++)
+            {
+                for (int j = 0; j < 25; j++)
+                {            
+                    total += dungeon[i][j] + " "; 
+                }
+                total += "\n";
+            }
+        return total;
+        }
+    }
+   
     //Getters and setters for fields are here.
     public int[][] getDungeon()
     {
