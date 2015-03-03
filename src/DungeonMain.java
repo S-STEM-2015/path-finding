@@ -14,14 +14,14 @@ public class DungeonMain {
      * This is our main method that allows us to 
      * execute the game.
      */
-    public static void main(String[] args)
+	public static void main(String[] args)
     {
         //showSplashScreen();
 		Dungeon marseille = new Dungeon();
 		System.out.println();
-		//marseille.rogueMode();
 		System.out.print(marseille.toString());
-		//showSplashScreen();
+		GUI gui = new GUI();
+		gui.createAndShowGUI(marseille.getDungeon());
 	}
 
 
