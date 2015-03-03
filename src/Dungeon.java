@@ -158,8 +158,8 @@ public class Dungeon implements CornerSeeds
         }
         
         //hard coded start/finish points, respectively
-        dungeon[0][1] = 1;
-        dungeon [24][23] = 1;
+        dungeon[0][1] = 3;
+        dungeon [24][23] = 4;
     } 
     
     public String toString()
