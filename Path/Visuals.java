@@ -219,14 +219,33 @@ public class Visuals
             System.out.println();
         }
     }
+   
     
-    public void printAll()
+    public void printAll(int... numbers)
     {
-        printRowByRow(0);
-        printRowByRow(5);
-        printRowByRow(10);
-        printRowByRow(15);
-        printRowByRow(20);
+        for (int i = 0; i < numbers.length; i++)
+        {
+            printRowByRow(numbers[i]);
+        }
+    }
+    
+    public void printToVisual(int[][] array)
+    {
+        for (int i = 0; i < array.length; i++)
+        {
+            for (int j = 0; j < array[i].length; j++)
+            {
+                if (array[i][j] == 0)
+                {
+                    System.out.println(" * ");
+                }
+                else
+                {
+                    System.out.println(" . ");
+                }
+            }
+            System.out.println("");
+        }
     }
 
     public static void main(String[] args)
@@ -234,6 +253,6 @@ public class Visuals
         Visuals v = new Visuals();
         v.AssignMaps(25);
         v.printMaps();
-        v.printAll();
+        v.printAll(0, 5, 10, 15, 20);
     }
 }
