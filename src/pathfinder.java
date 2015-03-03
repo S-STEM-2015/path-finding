@@ -5,8 +5,7 @@ public class pathfinder
 {
     private static final int SIZE = 3;
     int[][] dungeon;
-    Queue<int[]> coords;
-    LinkedList<int[]> path;
+    LinkedList<int[]> coords;
     public pathfinder()
     {
        Dungeon d = new Dungeon();
@@ -15,7 +14,7 @@ public class pathfinder
        int[] temp = {
            24, 23, 0
        };
-       coords.add(temp);
+       coords.addFirst(temp);
     }
     
     public int[] up(int[] coord)
@@ -86,10 +85,32 @@ public class pathfinder
         return (valid) ? temp : null;
     }
 
-    public void findPath()
+    public void findNext()
     {
         int[] temp = coords.poll();
-        
+        int[] tempup = up(temp);
+        int[] tempdown = down(temp);
+        int[] templeft = left(temp);
+        int[] tempright = right(temp);
+
+
+        //1 is path 0 is block
+        if(dungeon[tempup[0]][tempup[1]] == 1)
+        {
+            coords.addLast(tempup);
+        }
+        if(dungeon[tempdown[0]][tempdown[1]] == 1)
+        {
+            coords.addLast(tempdown);
+        }
+        if(dungeon[templeft[0]][templeft[1]] == 1)
+        {
+            coords.addLast(templeft);
+        }
+        if(dungeon[tempright[0]][tempright[1]] == 1)
+        {
+            coords.addLast(tempright);
+        }
     }
 }
 
