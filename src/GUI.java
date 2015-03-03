@@ -1,4 +1,3 @@
-
 import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.Container;
@@ -22,7 +21,17 @@ public class GUI {
     final static boolean RIGHT_TO_LEFT = false;
     public static JPanel panel;
  
-    public static void addComponentsToPane(Container pane) 
+    public void createGUI(){
+    	//Schedule a job for the event-dispatching thread:
+        //creating and showing this application's GUI.
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                //createAndShowGUI();
+            }
+        });
+    }
+    
+    public static void addComponentsToPane(Container pane, int[][] board) 
     {
         pane.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -36,7 +45,7 @@ public class GUI {
     
         addEnemyStats(c, pane);
         
-        addGrid(c, pane, 10, 10);
+        addGrid(c, pane, 10, 10, board);
     }
     
     public static void addPathButton(GridBagConstraints c, Container pane)
@@ -60,7 +69,7 @@ public class GUI {
         pane.add(button, c);
     }
     
-    public static void addGrid(GridBagConstraints c, Container pane, int height, int width)
+    public static void addGrid(GridBagConstraints c, Container pane, int hei, int wid, int[][] dungeon)
     {
         panel = new JPanel();
         c.fill = GridBagConstraints.BOTH;
@@ -68,6 +77,8 @@ public class GUI {
         c.gridwidth = 2;
         c.gridx = 0;
         c.gridy = 1;
+        int height =dungeon.length;
+        int width =dungeon[1].length;
         panel.setLayout(new GridLayout(height, width));
         
         pane.add(panel, c);
@@ -76,7 +87,20 @@ public class GUI {
             for(int j = 0; j < width; j++)
             {
                 JPanel subpanel = new JPanel();
-                subpanel.setBorder(BorderFactory.createLineBorder(Color.black));
+                //subpanel.setBorder(BorderFactory.createLineBorder(Color.black));
+                if(dungeon[i][j] == 0){
+                	subpanel.setBackground(Color.black);
+                }
+                else if(dungeon[i][j] == 1){
+                	subpanel.setBackground(new Color(216,214,215));
+                }
+                else if(dungeon[i][j] == 2){
+                	subpanel.setBackground(new Color(94,41,218));
+                }
+                else if(dungeon[i][j] == 3 || dungeon[i][j] == 4){
+                	subpanel.setBackground(new Color(94,41,218));
+                }
+
                 panel.add(subpanel);
             }
         }
@@ -204,25 +228,16 @@ public class GUI {
      * this method should be invoked from the
      * event-dispatching thread.
      */
-    private static void createAndShowGUI() {
+    public static void createAndShowGUI(int[][] board) {
         //Create and set up the window.
         JFrame frame = new JFrame("name to be determined");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800,1000);
         //Set up the content pane.
-        addComponentsToPane(frame.getContentPane());
+        addComponentsToPane(frame.getContentPane(),board);
  
         //Display the window.
         frame.setVisible(true);
     }
  
-    public static void main(String[] args) {
-        //Schedule a job for the event-dispatching thread:
-        //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                createAndShowGUI();
-            }
-        });
-    }
 }
