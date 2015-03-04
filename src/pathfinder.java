@@ -1,37 +1,41 @@
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.ListIterator;
 
 public class pathfinder
 {
-    private static final int SIZE = 3;
     int[][] dungeon;
     LinkedList<int[]> coords;
+    int[] start;
     public pathfinder()
     {
-       Dungeon d = new Dungeon();
-       dungeon = d.getDungeon();
-       coords = new LinkedList<int[]>();
-       int[] temp = {
-           24, 23, 0
-       };
-       coords.addFirst(temp);
+        Dungeon d = new Dungeon();
+        dungeon = d.getDungeon();
+        coords = new LinkedList<int[]>();
+        int[] end = new int[] {
+            24, 23, 0
+        };
+        start = new int[] {
+            0, 1, 0
+        };
+        coords.addFirst(end);
     }
     
     public int[] up(int[] coord)
     {
-       int[] temp = new int[3];
-       boolean valid = true;
-       if(coord[0] - 1 > 0)
-       {
-           temp[0] = coord[0] - 1;
-       }
-       else
-       {
-           valid = false;
-       }
-       temp[1] = coord[1];
-       temp[2] = coord[2] + 1;
-       return (valid) ? temp : null;
+        int[] temp = new int[3];
+        boolean valid = true;
+        if(coord[0] - 1 > 0)
+        {
+            temp[0] = coord[0] - 1;
+        }
+        else
+        {
+            valid = false;
+        }
+        temp[1] = coord[1];
+        temp[2] = coord[2] + 1;
+        return (valid) ? temp : null;
     }
 
     public int[] down(int[] coord)
@@ -87,29 +91,26 @@ public class pathfinder
 
     public void findNext()
     {
-        int[] temp = coords.poll();
-        int[] tempup = up(temp);
-        int[] tempdown = down(temp);
-        int[] templeft = left(temp);
-        int[] tempright = right(temp);
-
-
         //1 is path 0 is block
-        if(dungeon[tempup[0]][tempup[1]] == 1)
+        int[] temp = coords.getFirst();
+        LinkedList<int[]> next = new LinkedList<int[]>();
+        next.add(up(temp));
+        next.add(down(temp));
+        next.add(left(temp));
+        next.add(right(temp));
+        ListIterator<int[]> li = next.listIterator();
+        while(li.hasNext())
         {
-            coords.addLast(tempup);
+
         }
-        if(dungeon[tempdown[0]][tempdown[1]] == 1)
+    }
+
+    public void findPosPaths()
+    {
+        int[] last = coords.getLast();
+        while(true)
         {
-            coords.addLast(tempdown);
-        }
-        if(dungeon[templeft[0]][templeft[1]] == 1)
-        {
-            coords.addLast(templeft);
-        }
-        if(dungeon[tempright[0]][tempright[1]] == 1)
-        {
-            coords.addLast(tempright);
+            findNext();
         }
     }
 }
