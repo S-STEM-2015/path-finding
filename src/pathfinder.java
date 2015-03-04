@@ -1,6 +1,7 @@
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.ListIterator;
+import java.util.Arrays;
 
 public class pathfinder
 {
@@ -89,19 +90,43 @@ public class pathfinder
         return (valid) ? temp : null;
     }
 
-    public void findNext()
+    public boolean isWall(int[] a)
+    {
+        if(a[0] >= 24 || a[0] < 0 || a[1] >= 24 || a[1] < 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    //a must be the value from coords b must be the value from next
+    //returns true if the value should be removed from the list
+    public boolean compareCoords(int[] a, int[] b)
+    {
+        if(a[0] == b[0] && a[1] == b[1] && a[2] >= b[2])
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean findNext()
     {
         //1 is path 0 is block
-        int[] temp = coords.getFirst();
+        int[] firstCoord = coords.getFirst();
         LinkedList<int[]> next = new LinkedList<int[]>();
-        next.add(up(temp));
-        next.add(down(temp));
-        next.add(left(temp));
-        next.add(right(temp));
+        next.add(up(firstCoord));
+        next.add(down(firstCoord));
+        next.add(left(firstCoord));
+        next.add(right(firstCoord));
         ListIterator<int[]> li = next.listIterator();
         while(li.hasNext())
         {
-
+            int[] currentCoord = li.next();
+            if(compareCoords(firstCoord, currentCoord) || isWall(firstCoord))
+            {
+                li.remove();
+            }
         }
     }
 
