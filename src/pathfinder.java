@@ -1,13 +1,13 @@
 import java.util.LinkedList;
-import java.util.Queue;
 import java.util.ListIterator;
 import java.util.Arrays;
 
 public class pathfinder
 {
-    int[][] dungeon;
+    char[][] dungeon;
     LinkedList<int[]> coords;
     int[] start;
+
     public pathfinder()
     {
         Dungeon d = new Dungeon();
@@ -90,53 +90,60 @@ public class pathfinder
         return (valid) ? temp : null;
     }
 
+    public boolean isStart(int[] a)
+    {
+        if(a[0] == 0
+            && a[1] == 1)
+         {
+             return true;
+         }
+         return false;
+     }
+
     public boolean isWall(int[] a)
     {
-        if(a[0] >= 24 || a[0] < 0 || a[1] >= 24 || a[1] < 0)
+        int x = a[0];
+        int y = a[1];
+        if(dungeon[x][y] == '*')
         {
             return true;
         }
         return false;
     }
 
-    //a must be the value from coords b must be the value from next
-    //returns true if the value should be removed from the list
-    public boolean compareCoords(int[] a, int[] b)
+    public void generatePaths()
     {
-        if(a[0] == b[0] && a[1] == b[1] && a[2] >= b[2])
-        {
-            return true;
-        }
-        return false;
+       LinkedList<int[]> directions = new LinkedList<int[]>();
+       ListIterator<int[]> directionsIterator = directions.listIterator();
+       ListIterator<int[]> coordsIterator = coords.listIterator();
+       boolean reachedStart = false;
+       while(coordsIterator.hasNext() || !reachedStart)
+       {
+           int[] coordsNext = coordsIterator.next();
+           directions.add(up(coordsNext));
+           directions.add(down(coordsNext));
+           directions.add(left(coordsNext));
+           directions.add(right(coordsNext));
+           while(directionsIterator.hasNext())
+           {
+                int[] nextDirection = directionsIterator.next();
+                if(isStart(nextDirection))
+                {
+                    reachedStart = true;
+                }
+                if(isWall(nextDirection))
+                {
+                    directionsIterator.remove();
+                }
+                coords.addAll(directions);
+                directions.clear();
+           }
+       }
     }
 
-    public boolean findNext()
+    public void selectPath()
     {
-        //1 is path 0 is block
-        int[] firstCoord = coords.getFirst();
-        LinkedList<int[]> next = new LinkedList<int[]>();
-        next.add(up(firstCoord));
-        next.add(down(firstCoord));
-        next.add(left(firstCoord));
-        next.add(right(firstCoord));
-        ListIterator<int[]> li = next.listIterator();
-        while(li.hasNext())
-        {
-            int[] currentCoord = li.next();
-            if(compareCoords(firstCoord, currentCoord) || isWall(firstCoord))
-            {
-                li.remove();
-            }
-        }
-    }
 
-    public void findPosPaths()
-    {
-        int[] last = coords.getLast();
-        while(true)
-        {
-            findNext();
-        }
     }
 }
 
