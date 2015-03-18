@@ -162,6 +162,20 @@ public class Dungeon implements CornerSeeds
         dungeon [24][23] = 4;
     } 
     
+    public char[][] dungeonToChar()
+    {
+        char[][] newDungeon = new char[25][25];
+        for (int i = 0; i < 25; i++)
+        {
+            for (int j = 0; j < 25; j++)
+            {
+                newDungeon[i][j] = getDungeon()[i][j] == 0 ? ' ' : '*';   
+            }
+        }
+        
+        return newDungeon;
+    }
+    
     public String toString()
     {
         String total = "";
