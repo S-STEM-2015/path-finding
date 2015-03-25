@@ -1,187 +1,135 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.ListIterator;
 import java.util.Arrays;
 
+import sun.misc.Queue;
+
 public class pathfinder
 {
-    char[][] dungeon;
-    LinkedList<int[]> coords;
-    int[] start;
+    private int[][] dungeon;
+    private path start;
+    private path end;
+    private ArrayList<path> mainList = new ArrayList<path>();
+    private Queue secondList = new Queue<path>();
 
     public pathfinder()
     {
         Dungeon d = new Dungeon();
-        dungeon = d.dungeonToChar();
-        coords = new LinkedList<int[]>();
-        int[] end = new int[] {
-            24, 23, 0
-        };
-        start = new int[] {
-            0, 1, 0
-        };
-        coords.addFirst(end);
-    }
-    
-    public int[] up(int[] coord)
-    {
-        int[] temp = new int[3];
-        boolean valid = true;
-        if(coord[0] - 1 > 0)
-        {
-            temp[0] = coord[0] - 1;
-        }
-        else
-        {
-            valid = false;
-        }
-        temp[1] = coord[1];
-        temp[2] = coord[2] + 1;
-        return (valid) ? temp : null;
-    }
+        dungeon = d.getDungeon();
+        //look for start
+        for(int i = 0; i < dungeon.length;i++)
+        	for(int j = 0; j < dungeon[i].length;j++)
+        		if(dungeon[i][j] == 3)
+        		{
+        			start=new path(i,j,0);
+        		}
+        //look for end
+        for(int i = 0; i < dungeon.length;i++)
+        	for(int j = 0; j < dungeon[i].length;j++)
+        		if(dungeon[i][j] == 4)
+        		{
+        			end=new path(i,j,-1);
 
-    public int[] down(int[] coord)
-    {
-        int[] temp = new int[3];
-        boolean valid = true;
-        if(coord[0] + 1 < dungeon.length)
+        		}
+        if(findPath())
         {
-            temp[0] = coord[0] + 1;
+        	getPath();
+        	printMainList();
         }
-        else
-        {
-            valid = false;
-        }
-        temp[1] = coord[1];
-        temp[2] = coord[2] + 1;
-        return (valid) ? temp : null;
-    }
-
-    public int[] left(int[] coord)
-    {
-        int[] temp = new int[3];
-        boolean valid = true;
-        temp[0] = coord[0];
-        if(coord[1] - 1 > 0)
-        {
-            temp[1] = coord[1] - 1;
-        }
-        else
-        {
-            valid = false;
-        }
-        temp[2] = coord[2] + 1;
-        return (valid) ? temp : null;
-    }
-
-    public int[] right(int[] coord)
-    {
-        int[] temp = new int[3];
-        boolean valid = true;
-        temp[0] = coord[0];
-        if(coord[1] + 1 < dungeon.length)
-        {
-            temp[1] = coord[1] + 1;
-        }
-        else
-        {
-            valid = false;
-        }
-        temp[2] = coord[2] + 1;
-        return (valid) ? temp : null;
-    }
-
-    public boolean isStart(int[] a)
-    {
-        if(a[0] == 0
-           && a[1] == 1)
-        {
-            return true;
-        }
-        return false;
-     }
-
-    public boolean isWall(int[] a)
-    {
-        int x = a[0];
-        int y = a[1];
-        if(dungeon[x][y] == '*')
-        {
-            return true;
-        }
-        return false;
-    }
-
-    public LinkedList<int[]> makeCopy(LinkedList<int[]> a)
-    {
-        LinkedList<int[]> temp = new LinkedList<int[]>();
-        ListIterator<int[]> coordsIterator = a.listIterator();
-        ListIterator<int[]> temp = temp.listIterator();
-        while(coordsIterator.hasNext())
-        {
-            int[] coordsNext = coordsIterator.next();
-            for(int i = 0; i < 3; i++)
-            {
-                int[] val;
-                a[i] = coordsNext[i];
-                temp.add(val);
-            }
-        }
-        return temp;
-    }
-    
-    public void generatePaths()
-    {
-        LinkedList<int[]> directions = new LinkedList<int[]>();
-        ListIterator<int[]> directionsIterator = directions.listIterator();
-        ListIterator<int[]> coordsIterator = coords.listIterator();
-        boolean reachedStart = false;
-        while(coordsIterator.hasNext() || !reachedStart)
-        {
-            int[] coordsNext = coordsIterator.next();
-            directions.add(up(coordsNext));
-            directions.add(down(coordsNext));
-            directions.add(left(coordsNext));
-            directions.add(right(coordsNext));
-            while(directionsIterator.hasNext())
-            {
-                int[] nextDirection = directionsIterator.next();
-                if(isStart(nextDirection))
-                {
-                    reachedStart = true;
-                    break;
-                }
-                if(isWall(nextDirection))
-                {
-                    directionsIterator.remove();
-                }
-            }
-            coords.addAll(directions);
-            directions.clear();
-        }
-
-        LinkedList<int[]> temporary = makeCopy(coords);
-        ListIterator<int[]> tempIterator = temporary.listIterator();
-        coordsIterator = coords.listIterator();
-        while(coordsIterator.hasNext())
-        {
-            int[] coordsNext = coordsIterator.next();
-             
-            while(tempIterator.hasNext())
-            {
-                int[] tempNext = tempIterator.next();
-                if(tempNext[0] == coordsNext[0]
-                    && tempNext[1] == coordsNext[0]
-                    && tempNext[2] >= coordsNext[2])
-                {
-                    coords.remove();
-                }
-            }
-        }
-    }
-
-    public void selectPath()
-    {
         
     }
+    
+    private boolean findPath(){
+    	int currentI=0;
+    	mainList.add(start);
+    	while(currentI < mainList.size())
+    	{
+    		path curPath=mainList.get(currentI);
+    		path[] n = curPath.getNeighbor(curPath.getCnt()+1);
+    		//TODO: now add to secondList
+    		for(int i =0; i < 4; i++)
+    		{
+    			path obj=n[i];
+    			if(!obj.isWall(dungeon) && !isDup(obj)){
+    				secondList.enqueue(n[i]);
+    			}
+    		}
+    		while(!secondList.isEmpty())
+    		{
+    			try {
+    				
+    				path obj=(path)secondList.dequeue();
+						mainList.add(obj);
+						if(obj.equal(end))
+							return true;
+    				
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+    		}
+    		
+    		currentI++;
+    	}
+    	return false;
+    }
+    
+    private boolean isDup(path thisV)
+    {
+    	for(int i = 0; i < mainList.size(); i++)
+    	{
+    		if(thisV.equal(mainList.get(i)))
+    		{
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    
+    private void getPath()
+    {
+    	ArrayList<path> foundPath = new ArrayList<path>();
+    	path obj = mainList.remove(mainList.size()-1);//get the end point
+    	int count = obj.getCnt()-1;
+    	path[] n = obj.getNeighbor(count);
+    	foundPath.add(obj);
+    	for(int i = mainList.size()-2;i >= 0; i--)
+    	{		
+    		obj=mainList.remove(i);
+    		if(obj.getCnt()==count)
+    		{
+    		for(int j = 0; j<4; j++)
+    		{
+    			if(obj.equal(n[j]))
+    			{
+    				foundPath.add(obj);
+    				count--;
+    				n = obj.getNeighbor(count);
+    				break;
+    			}		
+    				
+    		}
+    		}
+    	}
+    	mainList = foundPath;
+    }
+    
+    public void printMainList()
+    {
+    	for(int i = mainList.size()-1; i >= 0; i--)
+    	{
+    		path obj=mainList.get(i);
+    		System.out.println(obj.getX()+" "+obj.getY()+" "+obj.getCnt()+" "+i);
+    	
+    	}
+    }
+    
+    public static void main(String[] args)
+    {
+    	pathfinder pathfinding = new pathfinder();
+    }
+    
+
 }
 
