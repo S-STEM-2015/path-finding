@@ -14,10 +14,9 @@ public class pathfinder
     private ArrayList<path> mainList = new ArrayList<path>();
     private Queue secondList = new Queue<path>();
 
-    public pathfinder()
+    public pathfinder(int[][] dungeon)
     {
-        Dungeon d = new Dungeon();
-        dungeon = d.getDungeon();
+        this.dungeon = dungeon;
         //look for start
         for(int i = 0; i < dungeon.length;i++)
         	for(int j = 0; j < dungeon[i].length;j++)
@@ -35,8 +34,9 @@ public class pathfinder
         		}
         if(findPath())
         {
-        	getPath();
         	printMainList();
+        	getPath();
+        	
         }
         
     }
@@ -94,8 +94,9 @@ public class pathfinder
     	int count = obj.getCnt()-1;
     	path[] n = obj.getNeighbor(count);
     	foundPath.add(obj);
-    	for(int i = mainList.size()-2;i >= 0; i--)
-    	{		
+    	for(int i = mainList.size()-1;i >= 0; i--)
+    	{	
+    		
     		obj=mainList.remove(i);
     		if(obj.getCnt()==count)
     		{
@@ -125,10 +126,11 @@ public class pathfinder
     	}
     }
     
-    public static void main(String[] args)
-    {
-    	pathfinder pathfinding = new pathfinder();
+    public ArrayList<path> getMainList(){
+    	return mainList;
     }
+    
+
     
 
 }
