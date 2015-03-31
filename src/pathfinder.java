@@ -25,19 +25,22 @@ public class pathfinder
             }
         }
         path[endx][endy] = 0;
+        writePaths();
     }
 
     
     public void writePaths()
     {
         int count = 1;
+        boolean infinite = false;
         
-        while(path[startx][starty] == -1)
+        while(path[startx][starty] == -1 || !infinite)
         {
             for(int i = 0; i < path.length; i++)
             {
                 for(int j = 0; j < path[i].length; j++)
                 {
+                	infinite = true;
                     if(path[i][j] == count - 1)
                     {
                         //left
@@ -45,7 +48,7 @@ public class pathfinder
                         {
                             if(path[i - 1][j] == -1 && !walls[i - 1][j])
                             {
-                                
+                                infinite = false;
                                 path[i - 1][j] = count;
                             }
                         }
@@ -54,6 +57,7 @@ public class pathfinder
                         {
                             if(path[i + 1][j] == -1 && !walls[i + 1][j])
                             {
+                            	infinite = false;
                                 path[i + 1][j] = count;
                             }
                         } 
@@ -62,6 +66,7 @@ public class pathfinder
                         {
                             if(path[i][j - 1] == -1 && !walls[i][j - 1])
                             {
+                            	infinite = false;
                                 path[i][j - 1] = count;
                             }
                         }
@@ -70,6 +75,7 @@ public class pathfinder
                         {
                             if(path[i][j + 1] == -1 && !walls[i][j + 1])
                             {
+                            	infinite = false;
                                 path[i][j + 1] = count;
                             }
                         }
@@ -77,6 +83,7 @@ public class pathfinder
                 }
             }
             count++;
+            
         }
         instructions = new int[count][2];
         instructions[0][0] = startx;
@@ -86,6 +93,11 @@ public class pathfinder
         {
             int x = instructions[i][0];
             int y = instructions[i][1];
+            if(x < 0 || x > path.length || y < 0 || y > path.length)
+            {
+            	
+            	break;
+            }
             i++;
             if(path[x + 1][y] == path[x][y] - 1)
             {
@@ -118,7 +130,7 @@ public class pathfinder
         return instructions;
     }
 
-    public void printPath(int[][] instructions)
+    public void printPath()
     {
         for(int i = 0; i < path.length; i++)
         {

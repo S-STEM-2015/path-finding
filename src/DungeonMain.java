@@ -20,7 +20,8 @@ public class DungeonMain {
 		Dungeon marseille = new Dungeon();
 		System.out.println();
 		System.out.print(marseille.toString());
-		GUI gui = new GUI();
+		pathfinder p = new pathfinder(marseille);
+		GUI gui = new GUI(p);
 		gui.createAndShowGUI(marseille.getDungeon());
 	}
 

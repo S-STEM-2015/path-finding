@@ -84,12 +84,11 @@ public class GUI implements ActionListener
             public void actionPerformed(ActionEvent e)
             {
                 // TODO Auto-generated method stub
-            	ArrayList<path> thePath = finder.getMainList();
-            	for(int i = 0; i<thePath.size(); i++)
+            	int[][] thePath = finder.getInstructions();
+            	for(int i = 0; i<thePath.length; i++)
             	{
-            		path obj = thePath.get(i);
-            		dungeon[obj.getX()][obj.getY()] = 5;
-            		grid[obj.getX()][obj.getY()].setBackground(new Color(102,204,255));
+            		dungeon[thePath[i][0]][thePath[i][1]] = 5;
+            		grid[thePath[i][0]][thePath[i][1]].setBackground(new Color(102,204,255));
             	}
   
             }
