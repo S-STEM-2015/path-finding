@@ -29,7 +29,7 @@ public class pathfinder
     }
 
     
-    public int[][] writePaths()
+    public void writePaths()
     {
         int count = 1;
         
@@ -111,7 +111,6 @@ public class pathfinder
                 instructions[i][0] = x;
                 instructions[i][0] = y - 1;
             }
-
         }
     }
 
