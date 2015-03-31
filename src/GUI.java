@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 import java.awt.event.*;
+import java.util.ArrayList;
  
 public class GUI implements ActionListener
 {
@@ -26,6 +27,12 @@ public class GUI implements ActionListener
     public static int playerPositionY = 1;
     public static JPanel[][] grid;
     public static int dungeon[][];
+    public static pathfinder finder;
+    
+    public GUI(pathfinder finder)
+    {
+    	this.finder = finder;
+    }
     
     public void createGUI(){
     	//Schedule a job for the event-dispatching thread:
@@ -70,6 +77,25 @@ public class GUI implements ActionListener
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
         c.gridy = 0;
+        
+        button.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                // TODO Auto-generated method stub
+            	ArrayList<path> thePath = finder.getMainList();
+            	for(int i = 0; i<thePath.size(); i++)
+            	{
+            		path obj = thePath.get(i);
+            		dungeon[obj.getX()][obj.getY()] = 5;
+            		grid[obj.getX()][obj.getY()].setBackground(new Color(102,204,255));
+            	}
+  
+            }
+            
+        });
+        
         pane.add(button, c);
     }
     
@@ -151,7 +177,7 @@ public class GUI implements ActionListener
             public void actionPerformed(ActionEvent e)
             {
                 // TODO Auto-generated method stub
-                if (dungeon[playerPositionY - 1][playerPositionX] == 1)
+                if (dungeon[playerPositionY - 1][playerPositionX] != 0)
                 {
                     grid[playerPositionY - 1][playerPositionX].setBackground(new Color(00, 255, 00));
                     dungeon[playerPositionY - 1][playerPositionX] = 5;
@@ -177,7 +203,7 @@ public class GUI implements ActionListener
             public void actionPerformed(ActionEvent e)
             {
                 // TODO Auto-generated method stub
-                if (dungeon[playerPositionY + 1][playerPositionX] == 1)
+                if (dungeon[playerPositionY + 1][playerPositionX] != 0)
                 {
                     grid[playerPositionY + 1][playerPositionX].setBackground(new Color(00, 255, 00));
                     dungeon[playerPositionY + 1][playerPositionX] = 5;
@@ -207,7 +233,7 @@ public class GUI implements ActionListener
             public void actionPerformed(ActionEvent e)
             {
                 // TODO Auto-generated method stub
-                if (dungeon[playerPositionY][playerPositionX - 1] == 1)
+                if (dungeon[playerPositionY][playerPositionX - 1] != 0)
                 {
                     grid[playerPositionY][playerPositionX - 1].setBackground(new Color(00, 255, 00));
                     dungeon[playerPositionY][playerPositionX - 1] = 5;
@@ -238,7 +264,7 @@ public class GUI implements ActionListener
             public void actionPerformed(ActionEvent e)
             {
                 // TODO Auto-generated method stub
-                if (dungeon[playerPositionY][playerPositionX + 1] == 1)
+                if (dungeon[playerPositionY][playerPositionX + 1] != 0)
                 {
                     grid[playerPositionY][playerPositionX + 1].setBackground(new Color(00, 255, 00));
                     dungeon[playerPositionY][playerPositionX + 1] = 5;
