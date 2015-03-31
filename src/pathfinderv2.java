@@ -1,4 +1,4 @@
-public class pathfinder
+public class pathfinderv2
 {
     boolean[][] walls;
     int[][] path;
@@ -7,7 +7,7 @@ public class pathfinder
     int starty = 1;
     int endx = 24;
     int endy = 23;
-    public pathfinder(Dungeon d)
+    public pathfinderv2(Dungeon d)
     {    
         int[][] dungeon = d.getDungeon();
         walls = new boolean[dungeon.length][dungeon.length];
