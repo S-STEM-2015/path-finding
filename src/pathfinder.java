@@ -1,153 +1,136 @@
 import java.util.ArrayList;
-//test
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Arrays;
+
+import sun.misc.Queue;
 
 public class pathfinder
 {
-    boolean[][] walls;
-    int[][] path;
-    int[][] instructions;
-    int startx = 0;
-    int starty = 1;
-    int endx = 24;
-    int endy = 23;
-    public pathfinder(Dungeon d)
-    {    
-        int[][] dungeon = d.getDungeon();
-        walls = new boolean[dungeon.length][dungeon.length];
-        path = new int[dungeon.length][dungeon.length];
-        for(int i = 0; i < dungeon.length; i++)
+    private int[][] dungeon;
+    private path start;
+    private path end;
+    private ArrayList<path> mainList = new ArrayList<path>();
+    private Queue secondList = new Queue<path>();
+
+    public pathfinder(int[][] dungeon)
+    {
+        this.dungeon = dungeon;
+        //look for start
+        for(int i = 0; i < dungeon.length;i++)
+        	for(int j = 0; j < dungeon[i].length;j++)
+        		if(dungeon[i][j] == 3)
+        		{
+        			start=new path(i,j,0);
+        		}
+        //look for end
+        for(int i = 0; i < dungeon.length;i++)
+        	for(int j = 0; j < dungeon[i].length;j++)
+        		if(dungeon[i][j] == 4)
+        		{
+        			end=new path(i,j,-1);
+
+        		}
+        if(findPath())
         {
-            for(int j = 0; j < dungeon[i].length; j++)
-            {
-                //-1 is path, -2 is block
-                walls[i][j] = dungeon[i][j] == 0 ? true : false;
-                path[i][j] = -1;
-            }
+        	printMainList();
+        	getPath();
+        	
         }
-        path[endx][endy] = 0;
-        writePaths();
+        
     }
+    
+    private boolean findPath(){
+    	int currentI=0;
+    	mainList.add(start);
+    	while(currentI < mainList.size())
+    	{
+    		path curPath=mainList.get(currentI);
+    		path[] n = curPath.getNeighbor(curPath.getCnt()+1);
+    		//TODO: now add to secondList
+    		for(int i =0; i < 4; i++)
+    		{
+    			path obj=n[i];
+    			if(!obj.isWall(dungeon) && !isDup(obj)){
+    				secondList.enqueue(n[i]);
+    			}
+    		}
+    		while(!secondList.isEmpty())
+    		{
+    			try {
+    				
+    				path obj=(path)secondList.dequeue();
+						mainList.add(obj);
+						if(obj.equal(end))
+							return true;
+    				
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+    		}
+    		
+    		currentI++;
+    	}
+    	return false;
+    }
+    
+    private boolean isDup(path thisV)
+    {
+    	for(int i = 0; i < mainList.size(); i++)
+    	{
+    		if(thisV.equal(mainList.get(i)))
+    		{
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    
+    private void getPath()
+    {
+    	ArrayList<path> foundPath = new ArrayList<path>();
+    	path obj = mainList.remove(mainList.size()-1);//get the end point
+    	int count = obj.getCnt()-1;
+    	path[] n = obj.getNeighbor(count);
+    	foundPath.add(obj);
+    	for(int i = mainList.size()-1;i >= 0; i--)
+    	{	
+    		
+    		obj=mainList.remove(i);
+    		if(obj.getCnt()==count)
+    		{
+    		for(int j = 0; j<4; j++)
+    		{
+    			if(obj.equal(n[j]))
+    			{
+    				foundPath.add(obj);
+    				count--;
+    				n = obj.getNeighbor(count);
+    				break;
+    			}		
+    				
+    		}
+    		}
+    	}
+    	mainList = foundPath;
+    }
+    
+    public void printMainList()
+    {
+    	for(int i = mainList.size()-1; i >= 0; i--)
+    	{
+    		path obj=mainList.get(i);
+    		System.out.println(obj.getX()+" "+obj.getY()+" "+obj.getCnt()+" "+i);
+    	
+    	}
+    }
+    
+    public ArrayList<path> getMainList(){
+    	return mainList;
+    }
+    
 
     
-    public void writePaths()
-    {
-        int count = 1;
-        boolean infinite = false;
-        
-        while(path[startx][starty] == -1 || !infinite)
-        {
-            for(int i = 0; i < path.length; i++)
-            {
-                for(int j = 0; j < path[i].length; j++)
-                {
-                	infinite = true;
-                    if(path[i][j] == count - 1)
-                    {
-                        //left
-                        if(i > 0)
-                        {
-                            if(path[i - 1][j] == -1 && !walls[i - 1][j])
-                            {
-                                infinite = false;
-                                path[i - 1][j] = count;
-                            }
-                        }
-                        //right
-                        if(i < path.length - 1)
-                        {
-                            if(path[i + 1][j] == -1 && !walls[i + 1][j])
-                            {
-                            	infinite = false;
-                                path[i + 1][j] = count;
-                            }
-                        } 
-                        //down
-                        if(j > 0)
-                        {
-                            if(path[i][j - 1] == -1 && !walls[i][j - 1])
-                            {
-                            	infinite = false;
-                                path[i][j - 1] = count;
-                            }
-                        }
-                        //up
-                        if(j < path[i].length - 1)
-                        {
-                            if(path[i][j + 1] == -1 && !walls[i][j + 1])
-                            {
-                            	infinite = false;
-                                path[i][j + 1] = count;
-                            }
-                        }
-                    }
-                }
-            }
-            count++;
-            
-        }
-        instructions = new int[count][2];
-        instructions[0][0] = startx;
-        instructions[0][1] = starty;
-        int i = 0;
-        while(instructions[i][0] != endx && instructions[i][1] != endy)
-        {
-            int x = instructions[i][0];
-            int y = instructions[i][1];
-            if(x < 0 || x > path.length || y < 0 || y > path.length)
-            {
-            	
-            	break;
-            }
-            i++;
-            if(path[x + 1][y] == path[x][y] - 1)
-            {
-                instructions[i][0] = x + 1;
-                instructions[i][1] = y;
-            }
 
-            else if(path[x - 1][y] == path[x][y] - 1)
-            {
-                instructions[i][0] = x - 1;
-                instructions[i][1] = y;
-            }
-
-            else if(path[x][y + 1] == path[x][y] - 1)
-            {
-                instructions[i][0] = x;
-                instructions[i][1] = y + 1;
-            }
-
-            else if(path[x][y - 1] == path[x][y] - 1)
-            {
-                instructions[i][0] = x;
-                instructions[i][0] = y - 1;
-            }
-        }
-    }
-
-    public int[][] getInstructions()
-    {
-        return instructions;
-    }
-
-    public void printPath()
-    {
-        for(int i = 0; i < path.length; i++)
-        {
-            for(int j = 0; j < path[i].length; j++)
-            {
-                System.out.print(path[i][j] + " ");
-            }
-            System.out.println();
-        }
-
-        for(int i = 0; i < instructions.length; i++)
-        {
-            for(int j = 0; j < instructions[i].length; j++)
-            {
-                System.out.print(instructions[i][j] + " ");
-            }
-            System.out.println();
-        }
-    }
 }
