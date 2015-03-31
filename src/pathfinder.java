@@ -10,9 +10,8 @@ public class pathfinder
     int starty = 1;
     int endx = 24;
     int endy = 23;
-    public pathfinder()
+    public pathfinder(Dungeon d)
     {    
-        Dungeon d = new Dungeon();
         int[][] dungeon = d.getDungeon();
         walls = new boolean[dungeon.length][dungeon.length];
         path = new int[dungeon.length][dungeon.length];
