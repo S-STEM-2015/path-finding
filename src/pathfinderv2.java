@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class pathfinderv2
 {
     boolean[][] walls;
@@ -19,18 +21,15 @@ public class pathfinderv2
                 //-1 is path, -2 is block
                 walls[i][j] = dungeon[i][j] == 0 ? true : false;
                 path[i][j] = -1;
-                //System.out.print(dungeon[i][j]);
             }
-            //System.out.println();
         }
-        //System.out.println();
         path[endx][endy] = 0;
-        writePaths();
-        printPath();
+        int[][] instructions = writePaths();
+        printPath(instructions);
     }
 
     
-    public void writePaths()
+    public int[][] writePaths()
     {
         int count = 1;
         
@@ -45,7 +44,6 @@ public class pathfinderv2
                         //left
                         if(i > 0)
                         {
-                            //System.out.println("left");
                             if(path[i - 1][j] == -1 && !walls[i - 1][j])
                             {
                                 
@@ -55,7 +53,6 @@ public class pathfinderv2
                         //right
                         if(i < path.length - 1)
                         {
-                            //System.out.println("right");
                             if(path[i + 1][j] == -1 && !walls[i + 1][j])
                             {
                                 path[i + 1][j] = count;
@@ -64,7 +61,6 @@ public class pathfinderv2
                         //down
                         if(j > 0)
                         {
-                            //System.out.println("down");
                             if(path[i][j - 1] == -1 && !walls[i][j - 1])
                             {
                                 path[i][j - 1] = count;
@@ -73,7 +69,6 @@ public class pathfinderv2
                         //up
                         if(j < path[i].length - 1)
                         {
-                            //System.out.println("up");
                             if(path[i][j + 1] == -1 && !walls[i][j + 1])
                             {
                                 path[i][j + 1] = count;
@@ -84,16 +79,59 @@ public class pathfinderv2
             }
             count++;
         }
-        
+        int[][] instructions = new int[count][2];
+        instructions[0][0] = startx;
+        instructions[0][1] = starty;
+        int i = 0;
+        while(instructions[i][0] != endx && instructions[i][1] != endy)
+        {
+            int x = instructions[i][0];
+            int y = instructions[i][1];
+            i++;
+            if(path[x + 1][y] == path[x][y] - 1)
+            {
+                instructions[i][0] = x + 1;
+                instructions[i][1] = y;
+            }
+
+            else if(path[x - 1][y] == path[x][y] - 1)
+            {
+                instructions[i][0] = x - 1;
+                instructions[i][1] = y;
+            }
+
+            else if(path[x][y + 1] == path[x][y] - 1)
+            {
+                instructions[i][0] = x;
+                instructions[i][1] = y + 1;
+            }
+
+            else if(path[x][y - 1] == path[x][y] - 1)
+            {
+                instructions[i][0] = x;
+                instructions[i][0] = y - 1;
+            }
+
+        }
+        return instructions;
     }
 
-    public void printPath()
+    public void printPath(int[][] instructions)
     {
         for(int i = 0; i < path.length; i++)
         {
             for(int j = 0; j < path[i].length; j++)
             {
                 System.out.print(path[i][j] + " ");
+            }
+            System.out.println();
+        }
+
+        for(int i = 0; i < instructions.length; i++)
+        {
+            for(int j = 0; j < instructions[i].length; j++)
+            {
+                System.out.print(instructions[i][j] + " ");
             }
             System.out.println();
         }
