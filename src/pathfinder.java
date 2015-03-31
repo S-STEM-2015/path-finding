@@ -1,15 +1,16 @@
 import java.util.ArrayList;
 //test
 
-public class pathfinderv2
+public class pathfinder
 {
     boolean[][] walls;
     int[][] path;
+    int[][] instructions;
     int startx = 0;
     int starty = 1;
     int endx = 24;
     int endy = 23;
-    public pathfinderv2()
+    public pathfinder()
     {    
         Dungeon d = new Dungeon();
         int[][] dungeon = d.getDungeon();
@@ -25,8 +26,6 @@ public class pathfinderv2
             }
         }
         path[endx][endy] = 0;
-        int[][] instructions = writePaths();
-        printPath(instructions);
     }
 
     
@@ -80,7 +79,7 @@ public class pathfinderv2
             }
             count++;
         }
-        int[][] instructions = new int[count][2];
+        instructions = new int[count][2];
         instructions[0][0] = startx;
         instructions[0][1] = starty;
         int i = 0;
@@ -114,6 +113,10 @@ public class pathfinderv2
             }
 
         }
+    }
+
+    public int[][] getInstructions()
+    {
         return instructions;
     }
 
@@ -136,10 +139,5 @@ public class pathfinderv2
             }
             System.out.println();
         }
-    }
-
-    public static void main(String[] args)
-    {
-        pathfinderv2 p = new pathfinderv2();
     }
 }
