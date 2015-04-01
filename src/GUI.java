@@ -472,7 +472,7 @@ public class GUI implements ActionListener
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         JFrame frame = new JFrame("name to be determined");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(0,0,screenSize.width/2, screenSize.height/2);
+        frame.setSize(screenSize.width/2, screenSize.height/2);
         //Set up the content pane.
         dungeon = board;
         addComponentsToPane(frame.getContentPane(),board);
