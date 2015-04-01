@@ -139,23 +139,34 @@ public class GUI implements ActionListener
             {
                 JPanel subpanel = new JPanel();
                 //subpanel.setBorder(BorderFactory.createLineBorder(Color.black));
-                if(dungeon[i][j] == 0){
-                	subpanel.setBackground(Color.black);
+                if(dungeon[i][j] == 0 && i > (playerPositionY - 2) && i < (playerPositionY + 2)
+                    && j > playerPositionX - 2 && j < playerPositionX + 2){
+                	subpanel.setBackground(new Color(100, 100, 100));
                 }
                 else if (dungeon[i][j] == 5)
                 {
                     subpanel.setBackground(new Color(00, 255, 00));
                 }
-                else if(dungeon[i][j] == 1){
-                	subpanel.setBackground(new Color(216,214,215));
-                }
-                else if(dungeon[i][j] == 2){
-                	subpanel.setBackground(new Color(94,41,218));
-                }             
                 else if(dungeon[i][j] == 3 || dungeon[i][j] == 4){
-                	subpanel.setBackground(new Color(94,41,218));
+                    subpanel.setBackground(new Color(94,41,218));
                 }
-                
+                else if(dungeon[i][j] == 1 && i > (playerPositionY - 2) && i < (playerPositionY + 2)
+                    && j > playerPositionX - 2 && j < playerPositionX + 2){
+                    subpanel.setBackground(Color.white);
+                }
+                else if(dungeon[i][j] == 1 && i < (playerPositionY - 2) || i > (playerPositionY + 2)
+                    && j < playerPositionX + 2 || j > playerPositionX + 2){
+                    subpanel.setBackground(Color.black);
+                }
+                else if ((i < playerPositionY - 2 || i > playerPositionY + 2) 
+                    && (j < playerPositionX - 2 || j > playerPositionX + 2))
+                {
+                    subpanel.setBackground(Color.BLACK);
+                }
+                else
+                {
+                    subpanel.setBackground(Color.BLACK);
+                }
                 grid[i][j] = subpanel;
                 panel.add(subpanel, c);
             }
@@ -181,9 +192,23 @@ public class GUI implements ActionListener
                 {
                     grid[playerPositionY - 1][playerPositionX].setBackground(new Color(00, 255, 00));
                     dungeon[playerPositionY - 1][playerPositionX] = 5;
-                    grid[playerPositionY][playerPositionX].setBackground(new Color(216, 214, 215));
+                    grid[playerPositionY][playerPositionX].setBackground(Color.white);
                     dungeon[playerPositionY][playerPositionX] = 1;
                     playerPositionY -= 1;
+                    for (int i = playerPositionY - 1; i < playerPositionY + 2; i++)
+                    {
+                        for (int j = playerPositionX - 1; j < playerPositionX + 2; j++)
+                        {
+                            if (dungeon[i][j] == 1)
+                            {
+                                grid[i][j].setBackground(Color.white);
+                            }
+                            else if (dungeon[i][j] == 0)
+                            {
+                                grid[i][j].setBackground(new Color(100, 100, 100));
+                            }
+                        }
+                    }
                 }
                 
                 
@@ -207,9 +232,23 @@ public class GUI implements ActionListener
                 {
                     grid[playerPositionY + 1][playerPositionX].setBackground(new Color(00, 255, 00));
                     dungeon[playerPositionY + 1][playerPositionX] = 5;
-                    grid[playerPositionY][playerPositionX].setBackground(new Color(216, 214, 215));
+                    grid[playerPositionY][playerPositionX].setBackground(Color.white);
                     dungeon[playerPositionY][playerPositionX] = 1;
                     playerPositionY += 1;
+                    for (int i = playerPositionY - 1; i < playerPositionY + 2; i++)
+                    {
+                        for (int j = playerPositionX - 1; j < playerPositionX + 2; j++)
+                        {
+                            if (dungeon[i][j] == 1)
+                            {
+                                grid[i][j].setBackground(Color.white);
+                            }
+                            else if (dungeon[i][j] == 0)
+                            {
+                                grid[i][j].setBackground(new Color(100, 100, 100));
+                            }
+                        }
+                    }
                 }
                 
                 
@@ -237,10 +276,24 @@ public class GUI implements ActionListener
                 {
                     grid[playerPositionY][playerPositionX - 1].setBackground(new Color(00, 255, 00));
                     dungeon[playerPositionY][playerPositionX - 1] = 5;
-                    grid[playerPositionY][playerPositionX].setBackground(new Color(216, 214, 215));
+                    grid[playerPositionY][playerPositionX].setBackground(Color.white);
                     dungeon[playerPositionY][playerPositionX] = 1;
                     playerPositionX -= 1;
                     //createAndShowGUI(dungeon);
+                    for (int i = playerPositionY - 1; i < playerPositionY + 2; i++)
+                    {
+                        for (int j = playerPositionX - 1; j < playerPositionX + 2; j++)
+                        {
+                            if (dungeon[i][j] == 1)
+                            {
+                                grid[i][j].setBackground(Color.white);
+                            }
+                            else if (dungeon[i][j] == 0)
+                            {
+                                grid[i][j].setBackground(new Color(100, 100, 100));
+                            }
+                        }
+                    }
                 }
                 
                 
@@ -268,9 +321,23 @@ public class GUI implements ActionListener
                 {
                     grid[playerPositionY][playerPositionX + 1].setBackground(new Color(00, 255, 00));
                     dungeon[playerPositionY][playerPositionX + 1] = 5;
-                    grid[playerPositionY][playerPositionX].setBackground(new Color(216, 214, 215));
+                    grid[playerPositionY][playerPositionX].setBackground(Color.white);
                     dungeon[playerPositionY][playerPositionX] = 1;
                     playerPositionX += 1;
+                    for (int i = playerPositionY - 1; i < playerPositionY + 2; i++)
+                    {
+                        for (int j = playerPositionX - 1; j < playerPositionX + 2; j++)
+                        {
+                            if (dungeon[i][j] == 1)
+                            {
+                                grid[i][j].setBackground(Color.white);
+                            }
+                            else if (dungeon[i][j] == 0)
+                            {
+                                grid[i][j].setBackground(new Color(100, 100, 100));
+                            }
+                        }
+                    }
                 }
                 
                 
