@@ -203,6 +203,7 @@ public class GUI implements ActionListener
                             {
                                 grid[i][j].setBackground(Color.white);
                             }
+ 
                             else if (dungeon[i][j] == 0)
                             {
                                 grid[i][j].setBackground(new Color(100, 100, 100));
