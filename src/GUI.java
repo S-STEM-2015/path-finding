@@ -283,9 +283,10 @@ public class GUI implements ActionListener
                             }
                         }
                     }
+                }
             }
 
-        });
+            });
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 1;
         c.ipady = 10;
