@@ -123,6 +123,7 @@ public class GUI implements ActionListener
             			if(dungeon[i][j] == 0){//walls
             				grid[i][j].setBackground(Color.black);
                         }
+
                         else if(dungeon[i][j] == 1){//path
                         	grid[i][j].setBackground(new Color(216,214,215));
                         }
@@ -178,10 +179,6 @@ public class GUI implements ActionListener
                 if(dungeon[i][j] == 0){
                 	subpanel.setBackground(Color.black);
                 }
-                else if (dungeon[i][j] == 5)
-                {
-                    subpanel.setBackground(new Color(00, 255, 00));
-                }
                 else if(dungeon[i][j] == 1){
                 	subpanel.setBackground(new Color(216,214,215));
                 }
@@ -215,7 +212,17 @@ public class GUI implements ActionListener
                 // TODO Auto-generated method stub
                 if (playerPositionY - 1 > -1 && dungeon[playerPositionY - 1][playerPositionX] != 0)
                 {
-
+                	if(dungeon[playerPositionY][playerPositionX] == 1){
+                		grid[playerPositionY][playerPositionX].setBackground(new Color(216,214,215));
+                    }     
+                	else if(dungeon[playerPositionY][playerPositionX] == 6)
+                	{
+                		grid[playerPositionY][playerPositionX].setBackground(new Color(102,204,255));
+                	}
+                    else if(dungeon[playerPositionY][playerPositionX] == 3 || dungeon[playerPositionY][playerPositionX] == 4){
+                    	grid[playerPositionY][playerPositionX].setBackground(new Color(94,41,218));
+                    }
+                	playerPositionY -= 1;
                     grid[playerPositionY][playerPositionX].setBackground(new Color(00, 255, 00));
                     
                 }
@@ -239,7 +246,17 @@ public class GUI implements ActionListener
                 // TODO Auto-generated method stub
                 if (playerPositionY + 1 < dungeon[0].length && dungeon[playerPositionY + 1][playerPositionX] != 0)
                 {
-
+                	if(dungeon[playerPositionY][playerPositionX] == 1){
+                		grid[playerPositionY][playerPositionX].setBackground(new Color(216,214,215));
+                    }     
+                	else if(dungeon[playerPositionY][playerPositionX] == 6)
+                	{
+                		grid[playerPositionY][playerPositionX].setBackground(new Color(102,204,255));
+                	}
+                    else if(dungeon[playerPositionY][playerPositionX] == 3 || dungeon[playerPositionY][playerPositionX] == 4){
+                    	grid[playerPositionY][playerPositionX].setBackground(new Color(94,41,218));
+                    }
+                	playerPositionY += 1;
                     grid[playerPositionY][playerPositionX].setBackground(new Color(00, 255, 00));
                     
                 }
@@ -267,12 +284,18 @@ public class GUI implements ActionListener
                 // TODO Auto-generated method stub
                 if (playerPositionX - 1>-1 && dungeon[playerPositionY][playerPositionX - 1] != 0)
                 {
-                    grid[playerPositionY][playerPositionX - 1].setBackground(new Color(00, 255, 00));
-                    dungeon[playerPositionY][playerPositionX - 1] = 5;
-                    grid[playerPositionY][playerPositionX].setBackground(new Color(216, 214, 215));
-                    dungeon[playerPositionY][playerPositionX] = 1;
-                    playerPositionX -= 1;
-                    //createAndShowGUI(dungeon);
+                	if(dungeon[playerPositionY][playerPositionX] == 1){
+                		grid[playerPositionY][playerPositionX].setBackground(new Color(216,214,215));
+                    }     
+                	else if(dungeon[playerPositionY][playerPositionX] == 6)
+                	{
+                		grid[playerPositionY][playerPositionX].setBackground(new Color(102,204,255));
+                	}
+                    else if(dungeon[playerPositionY][playerPositionX] == 3 || dungeon[playerPositionY][playerPositionX] == 4){
+                    	grid[playerPositionY][playerPositionX].setBackground(new Color(94,41,218));
+                    }
+                	playerPositionX -= 1;
+                    grid[playerPositionY][playerPositionX].setBackground(new Color(00, 255, 00));
                 }
                 
                 
@@ -296,13 +319,21 @@ public class GUI implements ActionListener
             public void actionPerformed(ActionEvent e)
             {
                 // TODO Auto-generated method stub
-                if (dungeon[playerPositionY][playerPositionX + 1] != 0)
+                if (playerPositionX + 1 < dungeon[0].length && dungeon[playerPositionY][playerPositionX + 1] != 0)
                 {
-                    grid[playerPositionY][playerPositionX + 1].setBackground(new Color(00, 255, 00));
-                    dungeon[playerPositionY][playerPositionX + 1] = 5;
-                    grid[playerPositionY][playerPositionX].setBackground(new Color(216, 214, 215));
-                    dungeon[playerPositionY][playerPositionX] = 1;
-                    playerPositionX += 1;
+                	if(dungeon[playerPositionY][playerPositionX] == 1){
+                		grid[playerPositionY][playerPositionX].setBackground(new Color(216,214,215));
+                    }     
+                	else if(dungeon[playerPositionY][playerPositionX] == 6)
+                	{
+                		grid[playerPositionY][playerPositionX].setBackground(new Color(102,204,255));
+                	}
+                    else if(dungeon[playerPositionY][playerPositionX] == 3 || dungeon[playerPositionY][playerPositionX] == 4){
+                    	grid[playerPositionY][playerPositionX].setBackground(new Color(94,41,218));
+                    }
+                	playerPositionX += 1;
+                    grid[playerPositionY][playerPositionX].setBackground(new Color(00, 255, 00));
+                    
                 }
                 
                 
