@@ -5,7 +5,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-
+import java.awt.Toolkit;
+import java.awt.Dimension;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -120,7 +121,6 @@ public class GUI implements ActionListener
             }
         }
         panel = new JPanel();
-        
         c.fill = GridBagConstraints.BOTH;
         c.weighty = 1.0;
         c.gridwidth = 2;
@@ -129,9 +129,6 @@ public class GUI implements ActionListener
         int height =dungeon.length;
         int width =dungeon[1].length;
         panel.setLayout(new GridLayout(height, width));
-        
-        
-        
         pane.add(panel, c);
         for(int i = 0; i < height; i++)
         {
@@ -139,31 +136,28 @@ public class GUI implements ActionListener
             {
                 JPanel subpanel = new JPanel();
                 //subpanel.setBorder(BorderFactory.createLineBorder(Color.black));
+                //0 is a wall
                 if(dungeon[i][j] == 0){
-                	subpanel.setBackground(Color.black);
+                	subpanel.setBackground(new Color(100,100,100));
                 }
+                //5 is the player's current location
                 else if (dungeon[i][j] == 5)
                 {
                     subpanel.setBackground(new Color(00, 255, 00));
                 }
+                //1 is walkable path
                 else if(dungeon[i][j] == 1){
-                	subpanel.setBackground(new Color(216,214,215));
+                	subpanel.setBackground(Color.white);
                 }
-                else if(dungeon[i][j] == 2){
-                	subpanel.setBackground(new Color(94,41,218));
-                }             
+                //3 and 4 are start/end points
                 else if(dungeon[i][j] == 3 || dungeon[i][j] == 4){
                 	subpanel.setBackground(new Color(94,41,218));
                 }
-                
                 grid[i][j] = subpanel;
                 panel.add(subpanel, c);
             }
         }
-        
-        
     }
-    
     public static void addUpMoveButton(GridBagConstraints c, Container pane)
     {
         JButton buttonUp = new JButton("UP");
@@ -406,9 +400,10 @@ public class GUI implements ActionListener
      */
     public static void createAndShowGUI(int[][] board) {
         //Create and set up the window.
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         JFrame frame = new JFrame("name to be determined");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800,1000);
+        frame.setSize(0,0,screenSize.width/2, screenSize.height/2);
         //Set up the content pane.
         dungeon = board;
         addComponentsToPane(frame.getContentPane(),board);
