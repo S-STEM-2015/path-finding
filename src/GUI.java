@@ -24,7 +24,7 @@ public class GUI implements ActionListener
     final static boolean RIGHT_TO_LEFT = false;
     public static JPanel panel;
     public static int playerPositionX = 1;
-    public static int playerPositionY = 1;
+    public static int playerPositionY = 0;
     public static JPanel[][] grid;
     public static int dungeon[][];
     public static pathfinder finder;
@@ -88,8 +88,13 @@ public class GUI implements ActionListener
             	for(int i = 0; i<thePath.size(); i++)
             	{
             		path obj = thePath.get(i);
-            		dungeon[obj.getX()][obj.getY()] = 6;
-            		grid[obj.getX()][obj.getY()].setBackground(new Color(102,204,255));
+            		if(dungeon[obj.getX()][obj.getY()] != 3 && dungeon[obj.getX()][obj.getY()] != 4)
+            		{
+            			if(!(playerPositionX == obj.getY() && playerPositionY == obj.getX()))
+            					grid[obj.getX()][obj.getY()].setBackground(new Color(102,204,255));
+            			dungeon[obj.getX()][obj.getY()] = 6;
+            		}
+            		
             	}
   
             }
