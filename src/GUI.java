@@ -17,7 +17,7 @@ import javax.swing.border.LineBorder;
 
 import java.awt.event.*;
 import java.util.ArrayList;
- 
+
 public class GUI implements ActionListener
 {
     final static boolean shouldFill = true;
@@ -29,12 +29,12 @@ public class GUI implements ActionListener
     public static JPanel[][] grid;
     public static int dungeon[][];
     public static pathfinder finder;
-    
+
     public GUI(pathfinder finder)
     {
     	this.finder = finder;
     }
-    
+
     public void createGUI(){
     	//Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
@@ -44,32 +44,32 @@ public class GUI implements ActionListener
             }
         });
     }
-    
-    public static void addComponentsToPane(Container pane, int[][] board) 
+
+    public static void addComponentsToPane(Container pane, int[][] board)
     {
         pane.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
- 
+
         addPathButton(c, pane);
-        
+
         addUpMoveButton(c, pane);
-        
+
         addDownMoveButton(c, pane);
-        
+
         addLeftMoveButton(c, pane);
-        
+
         addRightMoveButton(c, pane);
-        
+
         addRestartButton(c, pane);
-        
+
         addPlayerStats(c, pane);
-    
+
         addEnemyStats(c, pane);
-        
+
         addGrid(c, pane, 10, 10);
     }
-    
+
     public static void addPathButton(GridBagConstraints c, Container pane)
     {
         JButton button = new JButton("Show Best Path");
@@ -78,7 +78,7 @@ public class GUI implements ActionListener
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
         c.gridy = 0;
-        
+
         button.addActionListener(new ActionListener()
         {
             @Override
@@ -92,14 +92,14 @@ public class GUI implements ActionListener
             		dungeon[obj.getX()][obj.getY()] = 5;
             		grid[obj.getX()][obj.getY()].setBackground(new Color(102,204,255));
             	}
-  
+
             }
-            
+
         });
-        
+
         pane.add(button, c);
     }
-    
+
     public static void addRestartButton(GridBagConstraints c, Container pane)
     {
         JButton button = new JButton("Restart");
@@ -109,8 +109,8 @@ public class GUI implements ActionListener
         c.gridy = 0;
         pane.add(button, c);
     }
-    
-    public static void addGrid(GridBagConstraints c, final Container pane, int hei, int wid) 
+
+    public static void addGrid(GridBagConstraints c, final Container pane, int hei, int wid)
     {
         grid = new JPanel[dungeon.length][dungeon[0].length];
         for (int i = 0; i < grid.length; i++)
@@ -137,21 +137,34 @@ public class GUI implements ActionListener
                 JPanel subpanel = new JPanel();
                 //subpanel.setBorder(BorderFactory.createLineBorder(Color.black));
                 //0 is a wall
-                if(dungeon[i][j] == 0){
-                	subpanel.setBackground(new Color(100,100,100));
+                if(dungeon[i][j] == 0 && i > (playerPositionY - 2) && i < (playerPositionY + 2)
+                    && j > playerPositionX - 2 && j < playerPositionX + 2){
+                	subpanel.setBackground(new Color(100, 100, 100));
                 }
                 //5 is the player's current location
                 else if (dungeon[i][j] == 5)
                 {
                     subpanel.setBackground(new Color(00, 255, 00));
                 }
-                //1 is walkable path
-                else if(dungeon[i][j] == 1){
-                	subpanel.setBackground(Color.white);
-                }
-                //3 and 4 are start/end points
                 else if(dungeon[i][j] == 3 || dungeon[i][j] == 4){
-                	subpanel.setBackground(new Color(94,41,218));
+                    subpanel.setBackground(new Color(94,41,218));
+                }
+                else if(dungeon[i][j] == 1 && i > (playerPositionY - 2) && i < (playerPositionY + 2)
+                    && j > playerPositionX - 2 && j < playerPositionX + 2){
+                    subpanel.setBackground(Color.white);
+                }
+                else if(dungeon[i][j] == 1 && i < (playerPositionY - 2) || i > (playerPositionY + 2)
+                    && j < playerPositionX + 2 || j > playerPositionX + 2){
+                    subpanel.setBackground(Color.black);
+                }
+                else if ((i < playerPositionY - 2 || i > playerPositionY + 2)
+                    && (j < playerPositionX - 2 || j > playerPositionX + 2))
+                {
+                    subpanel.setBackground(Color.BLACK);
+                }
+                else
+                {
+                    subpanel.setBackground(Color.BLACK);
                 }
                 grid[i][j] = subpanel;
                 panel.add(subpanel, c);
@@ -175,22 +188,36 @@ public class GUI implements ActionListener
                 {
                     grid[playerPositionY - 1][playerPositionX].setBackground(new Color(00, 255, 00));
                     dungeon[playerPositionY - 1][playerPositionX] = 5;
-                    grid[playerPositionY][playerPositionX].setBackground(new Color(216, 214, 215));
+                    grid[playerPositionY][playerPositionX].setBackground(Color.white);
                     dungeon[playerPositionY][playerPositionX] = 1;
                     playerPositionY -= 1;
+                    for (int i = playerPositionY - 1; i < playerPositionY + 2; i++)
+                    {
+                        for (int j = playerPositionX - 1; j < playerPositionX + 2; j++)
+                        {
+                            if (dungeon[i][j] == 1)
+                            {
+                                grid[i][j].setBackground(Color.white);
+                            }
+                            else if (dungeon[i][j] == 0)
+                            {
+                                grid[i][j].setBackground(new Color(100, 100, 100));
+                            }
+                        }
+                    }
                 }
-                
-                
+
+
             }
-            
+
         });
         pane.add(buttonUp, c);
     }
-    
+
     public static void addDownMoveButton(GridBagConstraints c, Container pane)
     {
         JButton buttonDown = new JButton("DOWN");
-        
+
         buttonDown.addActionListener(new ActionListener()
         {
             @Override
@@ -201,14 +228,28 @@ public class GUI implements ActionListener
                 {
                     grid[playerPositionY + 1][playerPositionX].setBackground(new Color(00, 255, 00));
                     dungeon[playerPositionY + 1][playerPositionX] = 5;
-                    grid[playerPositionY][playerPositionX].setBackground(new Color(216, 214, 215));
+                    grid[playerPositionY][playerPositionX].setBackground(Color.white);
                     dungeon[playerPositionY][playerPositionX] = 1;
                     playerPositionY += 1;
+                    for (int i = playerPositionY - 1; i < playerPositionY + 2; i++)
+                    {
+                        for (int j = playerPositionX - 1; j < playerPositionX + 2; j++)
+                        {
+                            if (dungeon[i][j] == 1)
+                            {
+                                grid[i][j].setBackground(Color.white);
+                            }
+                            else if (dungeon[i][j] == 0)
+                            {
+                                grid[i][j].setBackground(new Color(100, 100, 100));
+                            }
+                        }
+                    }
                 }
-                
-                
+
+
             }
-            
+
         });
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 1;
@@ -216,11 +257,11 @@ public class GUI implements ActionListener
         c.gridy = 1;
         pane.add(buttonDown, c);
     }
-    
+
     public static void addLeftMoveButton(GridBagConstraints c, Container pane)
     {
         JButton buttonLeft = new JButton("LEFT");
-        
+
         buttonLeft.addActionListener(new ActionListener()
         {
             @Override
@@ -231,15 +272,29 @@ public class GUI implements ActionListener
                 {
                     grid[playerPositionY][playerPositionX - 1].setBackground(new Color(00, 255, 00));
                     dungeon[playerPositionY][playerPositionX - 1] = 5;
-                    grid[playerPositionY][playerPositionX].setBackground(new Color(216, 214, 215));
+                    grid[playerPositionY][playerPositionX].setBackground(Color.white);
                     dungeon[playerPositionY][playerPositionX] = 1;
                     playerPositionX -= 1;
                     //createAndShowGUI(dungeon);
+                    for (int i = playerPositionY - 1; i < playerPositionY + 2; i++)
+                    {
+                        for (int j = playerPositionX - 1; j < playerPositionX + 2; j++)
+                        {
+                            if (dungeon[i][j] == 1)
+                            {
+                                grid[i][j].setBackground(Color.white);
+                            }
+                            else if (dungeon[i][j] == 0)
+                            {
+                                grid[i][j].setBackground(new Color(100, 100, 100));
+                            }
+                        }
+                    }
                 }
-                
-                
+
+
             }
-            
+
         });
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
@@ -247,11 +302,11 @@ public class GUI implements ActionListener
         c.gridy = 2;
         pane.add(buttonLeft, c);
     }
-    
+
     public static void addRightMoveButton(GridBagConstraints c, Container pane)
     {
         JButton buttonRight = new JButton("RIGHT");
-        
+
         buttonRight.addActionListener(new ActionListener()
         {
             @Override
@@ -262,14 +317,28 @@ public class GUI implements ActionListener
                 {
                     grid[playerPositionY][playerPositionX + 1].setBackground(new Color(00, 255, 00));
                     dungeon[playerPositionY][playerPositionX + 1] = 5;
-                    grid[playerPositionY][playerPositionX].setBackground(new Color(216, 214, 215));
+                    grid[playerPositionY][playerPositionX].setBackground(Color.white);
                     dungeon[playerPositionY][playerPositionX] = 1;
                     playerPositionX += 1;
+                    for (int i = playerPositionY - 1; i < playerPositionY + 2; i++)
+                    {
+                        for (int j = playerPositionX - 1; j < playerPositionX + 2; j++)
+                        {
+                            if (dungeon[i][j] == 1)
+                            {
+                                grid[i][j].setBackground(Color.white);
+                            }
+                            else if (dungeon[i][j] == 0)
+                            {
+                                grid[i][j].setBackground(new Color(100, 100, 100));
+                            }
+                        }
+                    }
                 }
-                
-                
+
+
             }
-            
+
         });
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 1;
@@ -277,10 +346,10 @@ public class GUI implements ActionListener
         c.gridy = 2;
         pane.add(buttonRight, c);
     }
-    
+
     public static void addPlayerStats(GridBagConstraints c, Container pane)
     {
-        
+
       //Player Stats
         JPanel panel = new JPanel();
         panel.setBorder(new LineBorder(Color.BLACK));
@@ -297,7 +366,7 @@ public class GUI implements ActionListener
         pan.setPreferredSize( new Dimension( 300,45 ) );
         pan.add(label);
         pan.add(label2);
-        
+
         JPanel pan1 = new JPanel();
         icon = new ImageIcon("image/plus.jpg","Health");
         label = new JLabel(icon,JLabel.LEFT);
@@ -306,7 +375,7 @@ public class GUI implements ActionListener
         pan1.setPreferredSize( new Dimension( 300,45 ) );
         pan1.add(label);
         pan1.add(label2);
-        
+
         JPanel pan2 = new JPanel();
         icon = new ImageIcon("image/Diamond-Sword-icon.png","Attack");
         label = new JLabel(icon,JLabel.LEFT);
@@ -315,7 +384,7 @@ public class GUI implements ActionListener
         pan2.setPreferredSize( new Dimension( 300,45 ) );
         pan2.add(label);
         pan2.add(label2);
-        
+
         JPanel pan3 = new JPanel();
         icon = new ImageIcon("image/shield.png","Defense");
         label = new JLabel(icon,JLabel.LEFT);
@@ -324,14 +393,14 @@ public class GUI implements ActionListener
         pan3.setPreferredSize( new Dimension( 300,45 ) );
         pan3.add(label);
         pan3.add(label2);
-        
+
         panel.add(pan);
         panel.add(pan1);
         panel.add(pan2);
         panel.add(pan3);
         pane.add(panel,c);
     }
-    
+
     public static void addEnemyStats(GridBagConstraints c, Container pane)
     {
     	//Enemy stats
@@ -350,7 +419,7 @@ public class GUI implements ActionListener
         pan.setPreferredSize( new Dimension( 300,45 ) );
         pan.add(label);
         pan.add(label2);
-        
+
         JPanel pan1 = new JPanel();
         icon = new ImageIcon("image/plus.jpg","Health");
         label = new JLabel(icon,JLabel.LEFT);
@@ -359,7 +428,7 @@ public class GUI implements ActionListener
         pan1.setPreferredSize( new Dimension( 300,45 ) );
         pan1.add(label);
         pan1.add(label2);
-        
+
         JPanel pan2 = new JPanel();
         icon = new ImageIcon("image/Diamond-Sword-icon.png","Attack");
         label = new JLabel(icon,JLabel.LEFT);
@@ -368,7 +437,7 @@ public class GUI implements ActionListener
         pan2.setPreferredSize( new Dimension( 300,45 ) );
         pan2.add(label);
         pan2.add(label2);
-        
+
         JPanel pan3 = new JPanel();
         icon = new ImageIcon("image/shield.png","Defense");
         label = new JLabel(icon,JLabel.LEFT);
@@ -377,22 +446,22 @@ public class GUI implements ActionListener
         pan3.setPreferredSize( new Dimension( 300,45 ) );
         pan3.add(label);
         pan3.add(label2);
-        
+
         panel.add(pan);
         panel.add(pan1);
         panel.add(pan2);
         panel.add(pan3);
         pane.add(panel,c);
-        
+
     }
-    
+
     public static void changeColor(int x, int y,int length, Color c)
     {
         int n = ((x * length) - 1) + y;
         panel.getComponent(n).setBackground(c);
         panel.getComponent(10).setBackground(Color.RED);
     }
- 
+
     /**
      * Create the GUI and show it.  For thread safety,
      * this method should be invoked from the
@@ -407,7 +476,7 @@ public class GUI implements ActionListener
         //Set up the content pane.
         dungeon = board;
         addComponentsToPane(frame.getContentPane(),board);
-        
+
         //Display the window.
         frame.setVisible(true);
     }
@@ -416,8 +485,8 @@ public class GUI implements ActionListener
     public void actionPerformed(ActionEvent e)
     {
         // TODO Auto-generated method stub
-        
+
     }
-    
- 
+
+
 }
