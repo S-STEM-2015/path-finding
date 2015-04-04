@@ -4,8 +4,8 @@ import java.util.Random;
 /*
  * Dungeon.java
  *
- * This class generates dungeons by conjugating tiles
- * of various properties.
+ * This class generates dungeons by combining tiles
+ * with various properties together.
  * 
  * @author Wilton Latham, et. al.
  * @version 1.0
