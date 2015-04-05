@@ -15,7 +15,8 @@ public class Interact
     private JPanel jpOpFor;
 
     private static final int[] LEVEL = new int[]{1, 2, 3, 4, 5}; 
-    private static final double[] TACIT_LEVEL = new double[]{0.1, 0.08, 0.06, 0.04, 0.02};
+    private static final double[] TACIT_LEVEL = new double[]{0.1, 0.08, 
+        0.06, 0.04, 0.02};
     private static ArrayList<Items> equipped;
     private static ArrayList<Items> bestiary;
     private static Queue<Integer> interaction = new LinkedList<Integer>();
@@ -56,16 +57,16 @@ public class Interact
      */
     public void initComponents()
     {
+    
+        String test = "HP     999";
+        String test2 = "Monster    999";
 
         //Instantiates result label & sets its name
         
         GridLayout jlayRows = new GridLayout(4,0);
 
-        JLabel playerInfo = new JLabel("Player            999", 
-        SwingConstants.LEFT); 
-
-        JLabel opForInfo = new JLabel("Monster          999",
-        SwingConstants.RIGHT);
+        JLabel playerInfo = new JLabel(test); 
+        JLabel opForInfo = new JLabel(test2);
 
         playerInfo.setVerticalAlignment(SwingConstants.CENTER);
         opForInfo.setVerticalAlignment(SwingConstants.CENTER); 
@@ -88,8 +89,8 @@ public class Interact
  
         //Instantiates buttons & assigns their names
         JButton jButton0 = new JButton("Attack");
-        JButton jButton1 = new JButton("Thundera");
-        JButton jButton2 = new JButton("Blizzera");
+        JButton jButton1 = new JButton("Blizzard");
+        JButton jButton2 = new JButton("Discern");
         JButton jButton3 = new JButton("Heal");
 
         jButton0.setName("Attack");
