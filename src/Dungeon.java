@@ -7,7 +7,7 @@ import java.util.Random;
  * This class generates dungeons by combining tiles
  * with various properties together.
  * 
- * @author Wilton Latham, et. al.
+ * @author Wilton Latham, Preston Wilson, et. al.
  * @version 1.0
  */
 public class Dungeon implements CornerSeeds
