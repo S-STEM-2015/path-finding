@@ -18,42 +18,45 @@ public abstract class Entity
     private double ap;
     private double mr;
     private Color color;
-    private int lvl;
+    private int level;
 
     public Entity()
     {
         this.name = "???";
-        setLvl(1);
+        setLevel(1);
     }
     
-    public Entity(String name, int lvl)
+    public Entity(String name, int level)
     {
         this.name = name;
-        setLvl(lvl);
+        setLevel(level);
     }
 
     public void increaseExp()
     {
         if ((getExp() == 0) || getExp() % EXP_CAP != getExp())
         {
-            setExp(getExp() + ((2 * getLvl() + 1) 
-                / (Math.pow(Math.E, getLvl() + 1))) + 0.2);
+            setExp(expPerLevel(getLevel() + 1));
         }
         else
         {
-            setLvl(getLvl() + 1);
+            setLevel(getLevel() + 1);
         }
     }
 
-    public int getLvl()
+    //a lethargic 'Surge Function'
+    public double expPerLevel(double level)
     {
-        return lvl;
+        return ((2 * level) / Math.pow(Math.E, level)) + 0.2
     }
 
-    public void setLvl(int lvl)
+    public int getLevel()
     {
-        double surge;
-        
+        return level;
+    }
+
+    public void setLevel(int level)
+    {   
         if (lvl > LVL_CAP)
         {
             this.lvl = LVL_CAP;
@@ -62,15 +65,11 @@ public abstract class Entity
         {  
             this.lvl = lvl;
             
-            //an awesome surge function
-            surge = ((2 * (11 - getLvl())) 
-                / (Math.pow(Math.E, 11 - getLvl()))) + 0.2;
-            
-            setHealth(1000 * surge);
-            setAp(100 * surge);
-            setMana(500 * surge);
-            setMr(60 * surge);
-            setAd(40 * surge);
+            setHealth(1000 * expPerLevel(11 - getLevel()));
+            setAp(100 * expPerLevel(11 - getLevel()));
+            setMana(500 * expPerLevel(11 - getLevel()));
+            setMr(60 * expPerLevel(11 - getLevel()));
+            setAd(40 * expPerLevel(11 - getLevel()));
             setExp(0.0);
         }
     }
