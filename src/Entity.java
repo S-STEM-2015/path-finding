@@ -44,12 +44,6 @@ public abstract class Entity
         }
     }
 
-    //a lethargic 'Surge Function'
-    public double expPerLevel(double level)
-    {
-        return ((2 * level) / Math.pow(Math.E, level)) + 0.2
-    }
-
     public int getLevel()
     {
         return level;
@@ -153,4 +147,6 @@ public abstract class Entity
     {
         this.color = color;
     }
+    
+    public abstract double expPerLevel(double level);
 }
