@@ -7,12 +7,12 @@ import java.awt.Color;
  */
 public abstract class Entity
 {
-    private static final double EXP_CAP = 0.936;
-    private static final int LVL_CAP = 10;
+    public static final int EXP_CAP = 936;
+    public static final int LVL_CAP = 10;
 
     private String name;
-    private double health;
-    private double mana;
+    private int health;
+    private int mana;
     private double exp;
     private double ad;
     private double ap;
@@ -43,6 +43,16 @@ public abstract class Entity
             setLevel(getLevel() + 1);
         }
     }
+    
+    public int getMaxHealth()
+    {
+        return (int) Math.round(1000 * expPerLevel(11 - getLevel()));
+    }
+    
+    public int getMaxMana()
+    {
+        return (int) Math.round(500 * expPerLevel(11 - getLevel()));
+    }
 
     public int getLevel()
     {
@@ -51,17 +61,17 @@ public abstract class Entity
 
     public void setLevel(int level)
     {   
-        if (lvl > LVL_CAP)
+        if (level > LVL_CAP)
         {
-            this.lvl = LVL_CAP;
+            this.level = LVL_CAP;
         }
         else
         {  
-            this.lvl = lvl;
+            this.level = level;
             
-            setHealth(1000 * expPerLevel(11 - getLevel()));
+            setHealth(getMaxHealth());
+            setMana(getMaxMana());
             setAp(100 * expPerLevel(11 - getLevel()));
-            setMana(500 * expPerLevel(11 - getLevel()));
             setMr(60 * expPerLevel(11 - getLevel()));
             setAd(40 * expPerLevel(11 - getLevel()));
             setExp(0.0);
@@ -78,34 +88,34 @@ public abstract class Entity
         this.name = name;
     }
 
-    public double getHealth()
+    public int getHealth()
     {
         return health;
     }
 
     public void setHealth(double health)
     {
-        this.health = health;
+        this.health = (int) Math.round(health);
     }
 
-    public double getMana()
+    public int getMana()
     {
         return mana;
     }
 
-    public void setMana(double mana)
+    public void setMana(int mana)
     {
         this.mana = mana;
     }
 
-    public double getExp()
+    public int getExp()
     {
-        return exp;
+        return (int) exp;
     }
     
     public void setExp(double exp)
     {
-        this.exp = exp;
+        this.exp = Math.round(1000 * exp);
     }
 
     public double getAd()

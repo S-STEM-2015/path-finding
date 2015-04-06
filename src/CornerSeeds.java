@@ -8,7 +8,7 @@
  * @date 02-03-2015
  * 
  */
-interface CornerSeeds {
+public interface CornerSeeds {
     
         // Top-left Tile (Seed)
         static final int[][] TLTILE = 

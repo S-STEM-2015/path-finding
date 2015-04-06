@@ -13,6 +13,6 @@ public class Monster extends Entity
     // a rather lethargic "Surge Function"
     public double expPerLevel(double level)
     {
-        return ((2 * level) / Math.pow(Math.E, level)) + 0.2
+        return ((2 * level) / Math.pow(Math.E, level)) + 0.2;
     }
 }

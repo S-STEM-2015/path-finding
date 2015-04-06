@@ -1,172 +1,274 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.ArrayList;
-import java.util.Vector;
-
-public class Interact
+public class Interact implements ActionListener
 {
     private JFrame frame;
-    private Player player = new Player(); ;
-    private Monster monster = new Monster();
-    private Codex codex = new Codex();
+    private ArrayList<JLabel> jl = new ArrayList<JLabel>();
+    private JPanel pane0 = new JPanel();
+    private JPanel pane1 = new JPanel();
+    private JPanel pane2 = new JPanel();
+    private Player player;
+    private Monster monster;
 
     public Interact()
     {
-        frame = new JFrame();
-        frame.setLocation(100, 100);
-        frame.setSize(400, 400);
-        frame.setTitle("Interact");
-
-        //instantiates button and result panels
+        this.player = new Player("Melkor", 2);
+        this.setmonster(new Monster());
+        
         initComponents();
-        battlePhase();
 
     }
 
     public void battlePhase()
     {
-        frame.setVisible(true);
     }
-
-    /**
-     * Serves to test statistic parameters. 
-     */
-    public static void battleDiag()
-    {
-        double hp = 0;
-        double ap = 0;
-        double mana = 0;
-        double mr;
-        double ad;
-        double surge;
-
-        for (int level = 10; level > 0; level--)
-        {
-            surge = ((2 * level) / (Math.pow(Math.E, level))) + 0.2;
-            hp =  1000 * surge;
-            ap =  100 * surge;
-            mana = 500 * surge;
-            mr = 60 * surge;
-            ad = 40 * surge;
-
-            System.out.println("Level  " + (11 - level) + " HP: " + hp);
-            System.out.println("\t" + " Mana: " + mana);
-            System.out.println("\t" + " AP: " + ap);
-            System.out.println("\t" + " MR: " + mr);
-            System.out.println("\t" + " AD: " + ad);
-
-            System.out.println();
-        }
-
-        Player arwen = new Player("Arwen", 5);
-        System.out.println(arwen.getName() + " (Level " + arwen.getLvl() + "): "
-            + arwen.getHealth());
-    }
-
+    
     /**
      * This method initializes elements of the the battle phase, 
      * not limited to buttons and panels. 
      */
     public void initComponents()
     {
-
-        String test = "PLAYER";
-        String test2 = "FURGLE";
-
-        JPanel jpTop = new JPanel();
-        JPanel jpBottom = new JPanel();
-        JPanel jpPlayer = new JPanel();
-        JPanel jpButton = new JPanel();
-        JPanel jpOpFor = new JPanel();
-
-        //Instantiates result label & sets its name
-
-        JLabel playerInfo = new JLabel(test); 
-        JLabel opForInfo = new JLabel(test2);
-
-        playerInfo.setName("Player Stats");
-        opForInfo.setName("Enemy Stats");
-
-        //Adds result label to 'jpTop' panel
-
-
-        jpPlayer.add(playerInfo);
-        jpOpFor.add(opForInfo);
-
-        jpBottom.add(jpPlayer);
-        jpBottom.add(jpButton);
-        jpBottom.add(jpOpFor);
-
-        //assigns "GridLayout" to panels
-        jpButton.setLayout(new GridLayout(4,0));
-        jpPlayer.setLayout(new GridLayout(4,0));
-        setCalignment(playerInfo);
-
-        jpOpFor.setLayout(new GridLayout(4,0));
-        setCalignment(opForInfo);
-
-        jpBottom.setLayout(new GridLayout(0,3));
-
-        //Instantiates buttons & assigns their names
-        JButton jButton0 = new JButton("Attack");
-        JButton jButton1 = new JButton("Blizzard");
-        JButton jButton2 = new JButton("Discern");
-        JButton jButton3 = new JButton("Heal");
-
-        jButton0.setName("Attack");
-        jButton1.setName("Thundera");
-        jButton2.setName("Blizzera");
-        jButton3.setName("Heal");
-
-        /*//Assigns ActionListener inner classes to buttons
-	        jButton0.addActionListener(new InnerAdd());
-	        jButton1.addActionListener(new InnerSub());
-	        jButton2.addActionListener(new InnerMult());
-	        jButton3.addActionListener(new InnerDiv());*/
-
-        //Adds buttons to 'button' panel
-        jpButton.add(jButton0);
-        jpButton.add(jButton1);
-        jpButton.add(jButton2);
-        jpButton.add(jButton3);
-
-
-
-        //Adds buttons and result panels to frame
-        frame.add(jpTop, BorderLayout.CENTER);
-        frame.add(jpBottom, BorderLayout.PAGE_END);
+        frame = new JFrame();
+        frame.setLayout(new GridLayout(3,0,8,8));
+        getPane0().setLayout(new GridLayout(0,1));
+        getPane1().setLayout(new GridLayout(0,1));
+        getPane2().setLayout(new GridLayout(0,2));
+        frame.setLocation(100, 100);
+        frame.setSize(400, 400);
+        frame.setTitle("Interact");
+        
+        addDisplay();
+        addStats();
+        addButtons();
+        
+        frame.add(getPane0());
+        frame.add(getPane1());
+        frame.add(getPane2());
+        frame.setVisible(true);
     }
-
-    public class Codex {
-        private ArrayList<Monster> bestiary = new ArrayList<Monster>();
-
-        public Codex() {
-        }
-
-        public void addMonster(Monster e)
+    
+    public void addStats()
+    {
+        JPanel jpPs = new JPanel(new GridLayout(4, 0));
+        JPanel jpMs = new JPanel(new GridLayout(4, 0));
+        
+        jl.add(new JLabel(player.getName() + " (Level " 
+            + player.getLevel() + ")", JLabel.CENTER)); 
+        
+        jl.add(new JLabel(" EXP   " 
+            + Integer.toString(player.getExp()) 
+            + " / " + Entity.EXP_CAP + "   "));
+        
+        jl.add(new JLabel(" HP    " 
+            + Integer.toString(player.getHealth()) 
+            + " / " 
+            + Integer.toString(player.getMaxHealth()) + " "));
+        
+        jl.add(new JLabel(" Mana  " 
+            + Integer.toString(player.getMana())
+            + " / " + Integer.toString(player.getMaxMana()) 
+            + " "));
+        
+        jl.add(new JLabel(monster.getName(), JLabel.CENTER));
+        jl.add(new JLabel(" HP    ??? / ???", JLabel.CENTER));
+        jl.add(new JLabel(" Mana  ??? / ???", JLabel.CENTER));
+        jl.add(new JLabel(">>", JLabel.CENTER));
+        
+        
+        for (int i = 0; i < 4; i++)
         {
-            bestiary.add(e);
+            jpPs.add(jl.get(i));
+            jpMs.add(jl.get(i + 4));
         }
+        
+        getPane1().add(jpMs);
+        getPane2().add(jpPs);
+        
+    }
+ 
+    
+    public void addButtons()
+    {
+        JPanel jpB = new JPanel();
+        
+        JButton attack = new JButton("ATTACK");
+        
+        attack.addActionListener(new ActionListener()
+        { 
+            int counter = 0;
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                // TODO Auto-generated method stub
+                
+                if (counter < 4)
+                {
+                    jl.get(7).setText(jl.get(7).getText() + "  [ATTACK]  ");
+                    counter++;
+                }
+                
+            }
+
+        });
+       
+        JButton blizzard = new JButton("BLIZZARD");
+        
+        blizzard.addActionListener(new ActionListener()
+        { 
+            int counter = 0;
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                // TODO Auto-generated method stub
+                
+                if (counter < 4)
+                {
+                    jl.get(7).setText(jl.get(7).getText() + "  [BLIZZARD]  ");
+                    counter++;
+                }
+                
+            }
+
+        });
+        
+        JButton discern = new JButton("DISCERN");
+        
+        discern.addActionListener(new ActionListener()
+        { 
+            int counter = 0;
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                // TODO Auto-generated method stub
+                
+                if (counter < 4)
+                {
+                    jl.get(7).setText(jl.get(7).getText() + "  [DISCERN]  ");
+                    counter++;
+                }
+                
+            }
+
+        });
+        
+        JButton heal = new JButton("HEAL");
+        
+        heal.addActionListener(new ActionListener()
+        { 
+            int counter = 0;
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                // TODO Auto-generated method stub
+                
+                if (counter < 4)
+                {
+                    jl.get(7).setText(jl.get(7).getText() + "  [HEAL]  ");
+                    counter++;
+                }
+                
+            }
+
+        });
+        
+        jpB.setLayout(new GridLayout(4, 0));
+        jpB.add(blizzard);
+        jpB.add(attack);
+        jpB.add(discern);
+        jpB.add(heal);
+        getPane2().add(jpB);
+    }
+    
+    public void addDisplay()
+    {
+        JPanel jpD = new JPanel();
+        jpD.setLayout(new GridLayout(0, 1,8,8));
+        //ImageIcon icon = new ImageIcon("image/knight3-512.png","Player");
+        ImageIcon icon2 = new ImageIcon("image/assassin2-512.png","Monster");
+        //jpD.add(new JLabel(icon));
+        jpD.add(new JLabel(icon2));
+        
+        getPane0().add(jpD);
+ 
     }
 
     public void setCalignment(JLabel b) {
         b.setHorizontalAlignment(JLabel.CENTER);
-        b.setVerticalAlignment(JLabel.CENTER);
     }
 
     public static void main(String[] args)
     {
-        //new Interact();
-        battleDiag();
+        new Interact();
+    }
+    
+  //Getters and Setters
+
+    public Player getplayer()
+    {
+        return player;
+    }
+
+    public void setplayer(Player player)
+    {
+        this.player = player;
+    }
+
+    public Monster getmonster()
+    {
+        return monster;
+    }
+
+    public void setmonster(Monster monster)
+    {
+        this.monster = monster;
+    }
+
+    public JPanel getPane0()
+    {
+        return pane0;
+    }
+
+    public void setPane0(JPanel pane0)
+    {
+        this.pane0 = pane0;
+    }
+
+    public JPanel getPane1()
+    {
+        return pane1;
+    }
+
+    public void setPane1(JPanel pane1)
+    {
+        this.pane1 = pane1;
+    }
+
+    public JPanel getPane2()
+    {
+        return pane2;
+    }
+
+    public void setPane2(JPanel pane2)
+    {
+        this.pane2 = pane2;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e)
+    {
+        // TODO Auto-generated method stub
+        
     }
 
 }
 
 
 
-//Getters and Setters
+
 
