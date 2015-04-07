@@ -4,7 +4,15 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.*;
-
+ 
+ /**
+  * Interact.java
+  *
+  * Interactive Player vs. Monster display.
+  * 
+  * @author Wilt Latham
+  * @version 0.40
+  */
 public class Interact implements ActionListener
 {
     private JFrame frame;
