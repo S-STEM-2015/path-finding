@@ -117,35 +117,37 @@ public class GUI implements ActionListener
             @Override
             public void actionPerformed(ActionEvent e)
             {
+            	playerPositionX = 1;//reset player position
+                playerPositionY = 0;
             	for(int i = 0; i<dungeon.length; i++)
             	{
             		for(int j = 0; j < dungeon[i].length; j++)
-            		{
-            			if(dungeon[i][j] == 0){//walls
-            				grid[i][j].setBackground(Color.black);
-                        }
-
-                        else if(dungeon[i][j] == 1){//path
-                        	grid[i][j].setBackground(new Color(216,214,215));
-                        }
-                        else if(dungeon[i][j] == 2){
-                        	grid[i][j].setBackground(new Color(94,41,218));
-                        }             
-                        else if(dungeon[i][j] == 3 || dungeon[i][j] == 4){//start and end points
+            		{     
+                        if(dungeon[i][j] == 3 || dungeon[i][j] == 4){//start and end points
                         	grid[i][j].setBackground(new Color(00, 255, 00));
-                        	playerPositionX = 1;//reset player position
-                            playerPositionY = 0;
+                        	
                         	grid[i][j].setBackground(new Color(94,41,218));
                         }
+                        else if ((dungeon[i][j] == 1 || dungeon[i][j] == 6)
+								&& i > (playerPositionY - 2)
+								&& i < (playerPositionY + 2)
+								&& j > playerPositionX - 2
+								&& j < playerPositionX + 2) {
+							grid[i][j].setBackground(Color.white);
+						} else {
+							grid[i][j].setBackground(Color.BLACK);
+						}
             		}
             	}
-  
+            	grid[playerPositionY][playerPositionX].setBackground(new Color(00, 255, 00));
             }
             
         });
         
+        
         pane.add(button, c);
     }
+
 
     public static void addGrid(GridBagConstraints c, final Container pane, int hei, int wid)
     {
