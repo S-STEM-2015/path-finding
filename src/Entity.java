@@ -45,7 +45,7 @@ public abstract class Entity
     {
         if ((getExp() == 0.0) || getExp() % EXP_CAP != getExp())
         {
-            setExp(getExp() + expByLevel(getLevel()));
+            setExp(getExp() + getExpByLevel(getLevel()));
         }
         else
         {
@@ -53,25 +53,26 @@ public abstract class Entity
         }
     }
 
-    // a rather lethargic 'Surge Function'
-    public double getExpByLevel(double level)
+    // Includes a rather lethargic 'Surge Function'
+    public int getExpByLevel(int level)
     {
-        return ((2 * level) / Math.pow(Math.E, level)) + 0.2;
+        return (int) 1000 * ((2 * level) / Math.pow(Math.E, level)) 
+            + 0.2);
     }
-
-    public int getExpPoints()
+    
+    public int genStat(int factor)
     {
-        return (int) Math.round(1000 * getExp());
+        return factor * (getExpByLevel(11 - getLevel() / 1000)));
     }
     
     public int getMaxHealth()
     {
-        return (int) Math.round(1000 * expByLevel(11 - getLevel()));
+        return genStat(1000);
     }
     
     public int getMaxMana()
     {
-        return (int) Math.round(100 * expPerLevel(11 - getLevel()));
+        return genStat(100);
     }
 
     public int getLevel()

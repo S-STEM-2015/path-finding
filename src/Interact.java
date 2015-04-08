@@ -70,7 +70,7 @@ public class Interact implements ActionListener
             + player.getLevel() + ")", JLabel.CENTER)); 
         
         jl.add(new JLabel(" EXP   " 
-            + Integer.toString(player.getExp()) 
+            + Integer.toString(player.getExpByLevel()) 
             + " / " + Entity.EXP_CAP + "   "));
         
         jl.add(new JLabel(" HP    " 
