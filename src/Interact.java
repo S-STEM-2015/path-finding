@@ -17,60 +17,79 @@ public class Interact implements ActionListener
 {
     private JFrame frame;
     private ArrayList<JLabel> jl = new ArrayList<JLabel>();
-    private JPanel pane0 = new JPanel();
-    private JPanel pane1 = new JPanel();
-    private JPanel pane2 = new JPanel();
+    private JPanel panel;
+    private JPanel panel2; 
     private Player player;
+
     private Monster monster;
 
     public Interact()
     {
         this.player = new Player("Melkor", 2);
-        this.setmonster(new Monster());
+        this.monster = new Monster();
         
         initComponents();
-
-    }
-
-    public void battlePhase()
-    {
+        battleState(true);
     }
     
+    public Interact(Player player)
+    {
+		this.player = player;
+		this.monster = new Monster();
+		
+		initComponents();
+		battleState(true);
+    }
+
     /**
+     * Perhaps create a Battle state machine, eventually. This 
+     * would permit "Boss" battles.
+     */
+    public void battleState(boolean execute)
+    {  
+        if (execute) {
+            battleState(false);
+        }
+        else {
+            battleState(true);
+        }
+    }
+    
+    /*
      * This method initializes elements of the the battle phase, 
-     * not limited to buttons and panels. 
+     * not limited to buttons and panels. 'Should only be called 
+     * within constructor.
      */
     public void initComponents()
     {
-        frame = new JFrame();
-        frame.setLayout(new GridLayout(3,0,8,8));
-        getPane0().setLayout(new GridLayout(0,1));
-        getPane1().setLayout(new GridLayout(0,1));
-        getPane2().setLayout(new GridLayout(0,2));
-        frame.setLocation(100, 100);
-        frame.setSize(400, 400);
-        frame.setTitle("Interact");
+        
+        panel = new JPanel(new GridLayout(2,1));
+        panel2 = new JPanel(new GridLayout(1,2));
+        
         
         addDisplay();
         addStats();
         addButtons();
         
-        frame.add(getPane0());
-        frame.add(getPane1());
-        frame.add(getPane2());
+        panel.add(panel2);
+        
+        frame = new JFrame();
+        frame.setLocation(100, 100);
+        frame.setSize(800, 400);
+        frame.setTitle("Interact");
+        frame.add(panel);
         frame.setVisible(true);
     }
     
     public void addStats()
     {
         JPanel jpPs = new JPanel(new GridLayout(4, 0));
-        JPanel jpMs = new JPanel(new GridLayout(4, 0));
         
         jl.add(new JLabel(player.getName() + " (Level " 
             + player.getLevel() + ")", JLabel.CENTER)); 
         
         jl.add(new JLabel(" EXP   " 
-            + Integer.toString(player.getExpByLevel()) 
+            + Integer.toString(player.getExp()) 
             + " / " + Entity.EXP_CAP + "   "));
         
         jl.add(new JLabel(" HP    " 
@@ -83,20 +102,12 @@ public class Interact implements ActionListener
             + " / " + Integer.toString(player.getMaxMana()) 
             + " "));
         
-        jl.add(new JLabel(monster.getName(), JLabel.CENTER));
-        jl.add(new JLabel(" HP    ??? / ???", JLabel.CENTER));
-        jl.add(new JLabel(" Mana  ??? / ???", JLabel.CENTER));
-        jl.add(new JLabel(">>", JLabel.CENTER));
-        
-        
         for (int i = 0; i < 4; i++)
         {
             jpPs.add(jl.get(i));
-            jpMs.add(jl.get(i + 4));
         }
         
-        getPane1().add(jpMs);
-        getPane2().add(jpPs);
+        panel2.add(jpPs);
         
     }
  
@@ -190,24 +201,66 @@ public class Interact implements ActionListener
         jpB.add(attack);
         jpB.add(discern);
         jpB.add(heal);
-        getPane2().add(jpB);
+        panel2.add(jpB);
     }
     
     public void addDisplay()
     {
         JPanel jpD = new JPanel();
-        jpD.setLayout(new GridLayout(0, 1,8,8));
+        jpD.setLayout(new GridLayout(5, 1,8,8));
         //ImageIcon icon = new ImageIcon("image/knight3-512.png","Player");
         ImageIcon icon2 = new ImageIcon("image/assassin2-512.png","Monster");
         //jpD.add(new JLabel(icon));
-        jpD.add(new JLabel(icon2));
+        jl.add(new JLabel(icon2));
+        jl.add(new JLabel(monster.getName(), JLabel.CENTER));
+        jl.add(new JLabel(" HP    ??? / ???", JLabel.CENTER));
+        jl.add(new JLabel(" Mana  ??? / ???", JLabel.CENTER));
+        jl.add(new JLabel(">>", JLabel.CENTER));
         
-        getPane0().add(jpD);
+        for (int i = 4; i < 6; i++)
+        {
+            jpD.add(jl.get(i));
+        }
+        
+        panel.add(jpD);
  
     }
+    
+    public class Action
+    {
+        private boolean playerControlled = true;
+        public Action()
+        {
+        }
+        
+        public void execute()
+        {
+            
+        }
 
-    public void setCalignment(JLabel b) {
-        b.setHorizontalAlignment(JLabel.CENTER);
+        public boolean isPlayerControlled()
+        {
+            return playerControlled;
+        }
+
+        public void setPlayerControlled(boolean playerControlled)
+        {
+            this.playerControlled = playerControlled;
+        }
+    }
+    
+    public class AIAction extends Action
+    {
+        public AIAction()
+        {
+           super();
+           setPlayerControlled(false);
+        }
+        
+        public void execute()
+        {
+            
+        }
     }
 
     public static void main(String[] args)
@@ -215,18 +268,15 @@ public class Interact implements ActionListener
         new Interact();
     }
     
+    @Override
+    public void actionPerformed(ActionEvent e)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+    
   //Getters and Setters
-
-    public Player getplayer()
-    {
-        return player;
-    }
-
-    public void setplayer(Player player)
-    {
-        this.player = player;
-    }
-
+    
     public Monster getmonster()
     {
         return monster;
@@ -236,44 +286,6 @@ public class Interact implements ActionListener
     {
         this.monster = monster;
     }
-
-    public JPanel getPane0()
-    {
-        return pane0;
-    }
-
-    public void setPane0(JPanel pane0)
-    {
-        this.pane0 = pane0;
-    }
-
-    public JPanel getPane1()
-    {
-        return pane1;
-    }
-
-    public void setPane1(JPanel pane1)
-    {
-        this.pane1 = pane1;
-    }
-
-    public JPanel getPane2()
-    {
-        return pane2;
-    }
-
-    public void setPane2(JPanel pane2)
-    {
-        this.pane2 = pane2;
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e)
-    {
-        // TODO Auto-generated method stub
-        
-    }
-
 }
 
 

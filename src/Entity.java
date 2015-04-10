@@ -12,13 +12,13 @@ import java.awt.Color;
  */
 public abstract class Entity
 {
-    public static final double EXP_CAP = 0.936;
+    public static final int EXP_CAP = 936;
     public static final int LVL_CAP = 10;
 
     private String name;
     private int health;
     private int mana;
-    private double exp;
+    private int exp;
     private double ad;
     private double ap;
     private double mr;
@@ -41,28 +41,16 @@ public abstract class Entity
         setMana(getMaxMana());
     }
 
-    public void increaseExp()
-    {
-        if ((getExp() == 0.0) || getExp() % EXP_CAP != getExp())
-        {
-            setExp(getExp() + getExpByLevel(getLevel()));
-        }
-        else
-        {
-            setLevel(getLevel() + 1);
-        }
-    }
-
     // Includes a rather lethargic 'Surge Function'
     public int getExpByLevel(int level)
     {
-        return (int) 1000 * ((2 * level) / Math.pow(Math.E, level)) 
+        return (int) (1000 * ((2 * level) / Math.pow(Math.E, level)) 
             + 0.2);
     }
     
     public int genStat(int factor)
     {
-        return factor * (getExpByLevel(11 - getLevel() / 1000)));
+        return (int) factor * (getExpByLevel(11 - getLevel()));
     }
     
     public int getMaxHealth()
@@ -126,12 +114,12 @@ public abstract class Entity
         this.mana = mana;
     }
 
-    public double getExp()
+    public int getExp()
     {
         return exp;
     }
     
-    public void setExp(double exp)
+    public void setExp(int exp)
     {
         this.exp = exp;
     }

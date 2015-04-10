@@ -12,7 +12,7 @@ public class pathfinder
     private path start;
     private path end;
     private ArrayList<path> mainList = new ArrayList<path>();
-    private Queue secondList = new Queue<path>();
+    private Queue secondList = new Queue();
 
     public pathfinder(int[][] dungeon)
     {
