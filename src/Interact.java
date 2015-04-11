@@ -1,9 +1,12 @@
-import java.awt.*;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
-import javax.swing.*;
  
  /**
   * Interact.java
@@ -16,42 +19,43 @@ import javax.swing.*;
 public class Interact implements ActionListener
 {
     private JFrame frame;
-    private ArrayList<JLabel> jl = new ArrayList<JLabel>();
     private JPanel panel;
-    private JPanel panel2; 
-    private Player player;
+    private JLabel jlMStats;
+    private JLabel jlDialog;
+    private JLabel jlIcon;
 
+    private Player player;
     private Monster monster;
 
     public Interact()
     {
-        this.player = new Player("Melkor", 2);
+        this.setPlayer(new Player("Melkor", 2));
         this.monster = new Monster();
         
         initComponents();
-        battleState(true);
+        battleState(true, 0);
     }
     
     public Interact(Player player)
     {
-		this.player = player;
+		this.setPlayer(player);
 		this.monster = new Monster();
 		
 		initComponents();
-		battleState(true);
+		battleState(true, 0);
     }
 
     /**
      * Perhaps create a Battle state machine, eventually. This 
      * would permit "Boss" battles.
      */
-    public void battleState(boolean execute)
+    public void battleState(boolean execute, long timeMillis)
     {  
         if (execute) {
-            battleState(false);
+            battleState(false, 0);
         }
         else {
-            battleState(true);
+            battleState(true, 0);
         }
     }
     
@@ -62,16 +66,14 @@ public class Interact implements ActionListener
      */
     public void initComponents()
     {
-        
-        panel = new JPanel(new GridLayout(2,1));
-        panel2 = new JPanel(new GridLayout(1,2));
-        
+        panel = new JPanel(new GridLayout(3,1));
+        jlMStats = new JLabel("", JLabel.CENTER);
+        jlDialog = new JLabel("", JLabel.CENTER);
+        jlIcon = new JLabel("", JLabel.CENTER);
+
         
         addDisplay();
-        addStats();
-        addButtons();
-        
-        panel.add(panel2);
+        addInteractPanel();
         
         frame = new JFrame();
         frame.setLocation(100, 100);
@@ -81,148 +83,79 @@ public class Interact implements ActionListener
         frame.setVisible(true);
     }
     
-    public void addStats()
-    {
-        JPanel jpPs = new JPanel(new GridLayout(4, 0));
-        
-        jl.add(new JLabel(player.getName() + " (Level " 
-            + player.getLevel() + ")", JLabel.CENTER)); 
-        
-        jl.add(new JLabel(" EXP   " 
-            + Integer.toString(player.getExp()) 
-            + " / " + Entity.EXP_CAP + "   "));
-        
-        jl.add(new JLabel(" HP    " 
-            + Integer.toString(player.getHealth()) 
-            + " / " 
-            + Integer.toString(player.getMaxHealth()) + " "));
-        
-        jl.add(new JLabel(" Mana  " 
-            + Integer.toString(player.getMana())
-            + " / " + Integer.toString(player.getMaxMana()) 
-            + " "));
-        
-        for (int i = 0; i < 4; i++)
-        {
-            jpPs.add(jl.get(i));
-        }
-        
-        panel2.add(jpPs);
-        
-    }
- 
-    
-    public void addButtons()
-    {
-        JPanel jpB = new JPanel();
-        
+    public void addInteractPanel()
+    {   
+        JPanel jpA = new JPanel(new GridLayout(1,2));
+        JPanel jpB = new JPanel(new GridLayout(4,0));
         JButton attack = new JButton("ATTACK");
+        JButton blizzard = new JButton("BLIZZARD");
+        JButton discern = new JButton("DISCERN");
+        JButton heal = new JButton("HEAL");
         
+        jlDialog.setText("<html>\"This is a test.\"</html>"); 
+        
+
+
         attack.addActionListener(new ActionListener()
         { 
-            int counter = 0;
             @Override
             public void actionPerformed(ActionEvent e)
             {
                 // TODO Auto-generated method stub
-                
-                if (counter < 4)
-                {
-                    jl.get(7).setText(jl.get(7).getText() + "  [ATTACK]  ");
-                    counter++;
-                }
-                
             }
 
         });
-       
-        JButton blizzard = new JButton("BLIZZARD");
         
         blizzard.addActionListener(new ActionListener()
         { 
-            int counter = 0;
             @Override
             public void actionPerformed(ActionEvent e)
             {
                 // TODO Auto-generated method stub
-                
-                if (counter < 4)
-                {
-                    jl.get(7).setText(jl.get(7).getText() + "  [BLIZZARD]  ");
-                    counter++;
-                }
-                
             }
 
         });
-        
-        JButton discern = new JButton("DISCERN");
         
         discern.addActionListener(new ActionListener()
         { 
-            int counter = 0;
             @Override
             public void actionPerformed(ActionEvent e)
             {
                 // TODO Auto-generated method stub
-                
-                if (counter < 4)
-                {
-                    jl.get(7).setText(jl.get(7).getText() + "  [DISCERN]  ");
-                    counter++;
-                }
-                
             }
-
         });
-        
-        JButton heal = new JButton("HEAL");
         
         heal.addActionListener(new ActionListener()
         { 
-            int counter = 0;
             @Override
             public void actionPerformed(ActionEvent e)
             {
                 // TODO Auto-generated method stub
-                
-                if (counter < 4)
-                {
-                    jl.get(7).setText(jl.get(7).getText() + "  [HEAL]  ");
-                    counter++;
-                }
-                
             }
 
         });
         
-        jpB.setLayout(new GridLayout(4, 0));
         jpB.add(blizzard);
         jpB.add(attack);
         jpB.add(discern);
         jpB.add(heal);
-        panel2.add(jpB);
+        jpA.add(jlDialog);
+        jpA.add(jpB);
+        panel.add(jpA);
     }
     
     public void addDisplay()
     {
-        JPanel jpD = new JPanel();
-        jpD.setLayout(new GridLayout(5, 1,8,8));
+        JPanel jpS = new JPanel(new GridLayout(1,1));
+        jlMStats.setText("<html><center><br?>???<br>"
+        		+ "<br>HP  ??? / ???<br><br>Mana  ??? "
+        		+ "/ ???<br><br></center></html>");
         //ImageIcon icon = new ImageIcon("image/knight3-512.png","Player");
-        ImageIcon icon2 = new ImageIcon("image/assassin2-512.png","Monster");
-        //jpD.add(new JLabel(icon));
-        jl.add(new JLabel(icon2));
-        jl.add(new JLabel(monster.getName(), JLabel.CENTER));
-        jl.add(new JLabel(" HP    ??? / ???", JLabel.CENTER));
-        jl.add(new JLabel(" Mana  ??? / ???", JLabel.CENTER));
-        jl.add(new JLabel(">>", JLabel.CENTER));
+        jpS.add(jlMStats);
+        jlIcon.setIcon(new ImageIcon("image/assassin2-512.png","Monster"));
         
-        for (int i = 4; i < 6; i++)
-        {
-            jpD.add(jl.get(i));
-        }
-        
-        panel.add(jpD);
+        panel.add(jlIcon);
+        panel.add(jpS);
  
     }
     
@@ -286,9 +219,12 @@ public class Interact implements ActionListener
     {
         this.monster = monster;
     }
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
 }
-
-
-
-
-
