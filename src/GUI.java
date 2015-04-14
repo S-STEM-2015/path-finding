@@ -34,7 +34,7 @@ public class GUI implements ActionListener
     private static final Color startEnd = new Color(94,41,218);
     private static final Color player = new Color(00, 255, 00);
     private static final Color wall = new Color(100, 100, 100);
-    private static final Color path = Color.white;
+    private static final Color path =Color.white;
     private static final Color findPath = new Color(102,204,255);
     private static final Color nothing = Color.black;
     
@@ -225,7 +225,7 @@ public class GUI implements ActionListener
                 {
                     grid[playerPositionY - 1][playerPositionX].setBackground(player);
                     dungeon[playerPositionY - 1][playerPositionX] = 5;
-                    grid[playerPositionY][playerPositionX].setBackground(Color.white);
+                    grid[playerPositionY][playerPositionX].setBackground(path);
                     dungeon[playerPositionY][playerPositionX] = 1;
                     playerPositionY -= 1;
                     for (int i = playerPositionY - 1; i < playerPositionY + 2; i++)
@@ -353,7 +353,7 @@ public class GUI implements ActionListener
                 {
                     grid[playerPositionY][playerPositionX + 1].setBackground(player);
                     dungeon[playerPositionY][playerPositionX + 1] = 5;
-                    grid[playerPositionY][playerPositionX].setBackground(Color.white);
+                    grid[playerPositionY][playerPositionX].setBackground(path);
                     dungeon[playerPositionY][playerPositionX] = 1;
                     playerPositionX += 1;
                     for (int i = playerPositionY - 1; i < playerPositionY + 2; i++)
@@ -362,7 +362,7 @@ public class GUI implements ActionListener
                         {
                             if (dungeon[i][j] == 1)
                             {
-                                grid[i][j].setBackground(Color.white);
+                                grid[i][j].setBackground(path);
                             }
                             else if (dungeon[i][j] == 0)
                             {
