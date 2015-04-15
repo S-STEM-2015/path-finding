@@ -78,6 +78,103 @@ public class GUI implements ActionListener {
 
 	public static void addPathButton(GridBagConstraints c, Container pane) {
 		JButton button = new JButton("Show Best Path");
+        button.addKeyListener(new KeyListener() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_DOWN){
+                	if (playerPositionY + 1 < dungeon[0].length
+    						&& dungeon[playerPositionY + 1][playerPositionX] != 0) {
+    					grid[playerPositionY + 1][playerPositionX]
+    							.setBackground(player);
+    					dungeon[playerPositionY + 1][playerPositionX] = 5;
+    					grid[playerPositionY][playerPositionX].setBackground(path);
+    					dungeon[playerPositionY][playerPositionX] = 1;
+    					playerPositionY += 1;
+    					for (int i = playerPositionY - 1; i < playerPositionY + 2; i++) {
+    						for (int j = playerPositionX - 1; j < playerPositionX + 2; j++) {
+    							if (dungeon[i][j] == 1) {
+    								grid[i][j].setBackground(path);
+    							} else if (dungeon[i][j] == 0) {
+    								grid[i][j].setBackground(wall);
+    							}
+    						}
+    					}
+    				}
+                }
+                else if(e.getKeyCode() == KeyEvent.VK_UP){
+                	if (playerPositionY - 1 > -1
+    						&& dungeon[playerPositionY - 1][playerPositionX] != 0) {
+    					grid[playerPositionY - 1][playerPositionX]
+    							.setBackground(player);
+    					dungeon[playerPositionY - 1][playerPositionX] = 5;
+    					grid[playerPositionY][playerPositionX].setBackground(path);
+    					dungeon[playerPositionY][playerPositionX] = 1;
+    					playerPositionY -= 1;
+    					for (int i = playerPositionY - 1; i < playerPositionY + 2; i++) {
+    						for (int j = playerPositionX - 1; j < playerPositionX + 2; j++) {
+    							if (dungeon[i][j] == 1) {
+    								grid[i][j].setBackground(path);
+    							}
+
+    							else if (dungeon[i][j] == 0) {
+    								grid[i][j].setBackground(wall);
+    							}
+    						}
+    					}
+    				}
+                }
+                else if(e.getKeyCode() == KeyEvent.VK_LEFT){
+                	if (playerPositionX - 1 > -1
+    						&& dungeon[playerPositionY][playerPositionX - 1] != 0) {
+    					grid[playerPositionY][playerPositionX - 1]
+    							.setBackground(player);
+    					dungeon[playerPositionY][playerPositionX - 1] = 5;
+    					grid[playerPositionY][playerPositionX].setBackground(path);
+    					dungeon[playerPositionY][playerPositionX] = 1;
+    					playerPositionX -= 1;
+    					// createAndShowGUI(dungeon);
+    					for (int i = playerPositionY - 1; i < playerPositionY + 2; i++) {
+    						for (int j = playerPositionX - 1; j < playerPositionX + 2; j++) {
+    							if (dungeon[i][j] == 1) {
+    								grid[i][j].setBackground(path);
+    							} else if (dungeon[i][j] == 0) {
+    								grid[i][j].setBackground(wall);
+    							}
+    						}
+    					}
+    				}
+                }
+                else if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+                	if (playerPositionX + 1 < dungeon[0].length
+    						&& dungeon[playerPositionY][playerPositionX + 1] != 0) {
+    					grid[playerPositionY][playerPositionX + 1]
+    							.setBackground(player);
+    					dungeon[playerPositionY][playerPositionX + 1] = 5;
+    					grid[playerPositionY][playerPositionX].setBackground(path);
+    					dungeon[playerPositionY][playerPositionX] = 1;
+    					playerPositionX += 1;
+    					for (int i = playerPositionY - 1; i < playerPositionY + 2; i++) {
+    						for (int j = playerPositionX - 1; j < playerPositionX + 2; j++) {
+    							if (dungeon[i][j] == 1) {
+    								grid[i][j].setBackground(path);
+    							} else if (dungeon[i][j] == 0) {
+    								grid[i][j].setBackground(wall);
+    							}
+    						}
+    					}
+    				}
+                }
+            }
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+			}
+		});
+
 		c.weightx = 0.5;
 		c.ipady = 20;
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -111,6 +208,103 @@ public class GUI implements ActionListener {
 
 	public static void addRestartButton(GridBagConstraints c, Container pane) {
 		JButton button = new JButton("Restart");
+        button.addKeyListener(new KeyListener() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_DOWN){
+                	if (playerPositionY + 1 < dungeon[0].length
+    						&& dungeon[playerPositionY + 1][playerPositionX] != 0) {
+    					grid[playerPositionY + 1][playerPositionX]
+    							.setBackground(player);
+    					dungeon[playerPositionY + 1][playerPositionX] = 5;
+    					grid[playerPositionY][playerPositionX].setBackground(path);
+    					dungeon[playerPositionY][playerPositionX] = 1;
+    					playerPositionY += 1;
+    					for (int i = playerPositionY - 1; i < playerPositionY + 2; i++) {
+    						for (int j = playerPositionX - 1; j < playerPositionX + 2; j++) {
+    							if (dungeon[i][j] == 1) {
+    								grid[i][j].setBackground(path);
+    							} else if (dungeon[i][j] == 0) {
+    								grid[i][j].setBackground(wall);
+    							}
+    						}
+    					}
+    				}
+                }
+                else if(e.getKeyCode() == KeyEvent.VK_UP){
+                	if (playerPositionY - 1 > -1
+    						&& dungeon[playerPositionY - 1][playerPositionX] != 0) {
+    					grid[playerPositionY - 1][playerPositionX]
+    							.setBackground(player);
+    					dungeon[playerPositionY - 1][playerPositionX] = 5;
+    					grid[playerPositionY][playerPositionX].setBackground(path);
+    					dungeon[playerPositionY][playerPositionX] = 1;
+    					playerPositionY -= 1;
+    					for (int i = playerPositionY - 1; i < playerPositionY + 2; i++) {
+    						for (int j = playerPositionX - 1; j < playerPositionX + 2; j++) {
+    							if (dungeon[i][j] == 1) {
+    								grid[i][j].setBackground(path);
+    							}
+
+    							else if (dungeon[i][j] == 0) {
+    								grid[i][j].setBackground(wall);
+    							}
+    						}
+    					}
+    				}
+                }
+                else if(e.getKeyCode() == KeyEvent.VK_LEFT){
+                	if (playerPositionX - 1 > -1
+    						&& dungeon[playerPositionY][playerPositionX - 1] != 0) {
+    					grid[playerPositionY][playerPositionX - 1]
+    							.setBackground(player);
+    					dungeon[playerPositionY][playerPositionX - 1] = 5;
+    					grid[playerPositionY][playerPositionX].setBackground(path);
+    					dungeon[playerPositionY][playerPositionX] = 1;
+    					playerPositionX -= 1;
+    					// createAndShowGUI(dungeon);
+    					for (int i = playerPositionY - 1; i < playerPositionY + 2; i++) {
+    						for (int j = playerPositionX - 1; j < playerPositionX + 2; j++) {
+    							if (dungeon[i][j] == 1) {
+    								grid[i][j].setBackground(path);
+    							} else if (dungeon[i][j] == 0) {
+    								grid[i][j].setBackground(wall);
+    							}
+    						}
+    					}
+    				}
+                }
+                else if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+                	if (playerPositionX + 1 < dungeon[0].length
+    						&& dungeon[playerPositionY][playerPositionX + 1] != 0) {
+    					grid[playerPositionY][playerPositionX + 1]
+    							.setBackground(player);
+    					dungeon[playerPositionY][playerPositionX + 1] = 5;
+    					grid[playerPositionY][playerPositionX].setBackground(path);
+    					dungeon[playerPositionY][playerPositionX] = 1;
+    					playerPositionX += 1;
+    					for (int i = playerPositionY - 1; i < playerPositionY + 2; i++) {
+    						for (int j = playerPositionX - 1; j < playerPositionX + 2; j++) {
+    							if (dungeon[i][j] == 1) {
+    								grid[i][j].setBackground(path);
+    							} else if (dungeon[i][j] == 0) {
+    								grid[i][j].setBackground(wall);
+    							}
+    						}
+    					}
+    				}
+                }
+            }
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+			}
+		});
+
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.ipady = 20;
 		c.gridx = 1;
