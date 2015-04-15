@@ -21,7 +21,13 @@ public class DungeonMain {
 		System.out.println();
 		System.out.print(marseille.toString());
 		pathfinder p = new pathfinder(marseille.getDungeon());
+		while(!p.getFindP())
+		{
+			marseille.generateDungeon();
+			p.run(marseille.getDungeon());
+		}
 		GUI gui = new GUI(p);
+		
 		gui.createAndShowGUI(marseille.getDungeon());
 	}
 

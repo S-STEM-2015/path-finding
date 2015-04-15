@@ -13,11 +13,25 @@ public class pathfinder
     private path end;
     private ArrayList<path> mainList = new ArrayList<path>();
     private Queue secondList = new Queue();
+    private boolean findP;
 
     public pathfinder(int[][] dungeon)
     {
-        this.dungeon = dungeon;
-        //look for start
+        
+        run(dungeon);
+        
+    }
+    
+    
+    public boolean getFindP()
+    {
+    	return findP;
+    }
+    
+    public void run(int[][] dungeon){
+    	//set the dungeon
+    	this.dungeon = dungeon;
+    	//look for start
         for(int i = 0; i < dungeon.length;i++)
         	for(int j = 0; j < dungeon[i].length;j++)
         		if(dungeon[i][j] == 3)
@@ -32,13 +46,13 @@ public class pathfinder
         			end=new path(i,j,-1);
 
         		}
-        if(findPath())
+        findP = findPath();
+        if(findP)
         {
-        	printMainList();
+        	//printMainList();
         	getPath();
         	
         }
-        
     }
     
     private boolean findPath(){
