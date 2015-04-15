@@ -29,7 +29,7 @@ public class GUI implements ActionListener
     public static JPanel[][] grid;
     public static int dungeon[][];
     public static pathfinder finder;
-    
+
     //colors
     private static final Color startEnd = new Color(94,41,218);
     private static final Color player = new Color(00, 255, 00);
@@ -37,7 +37,7 @@ public class GUI implements ActionListener
     private static final Color path =Color.white;
     private static final Color findPath = new Color(102,204,255);
     private static final Color nothing = Color.black;
-    
+
 
     public GUI(pathfinder finder)
     {
@@ -104,7 +104,7 @@ public class GUI implements ActionListener
             					grid[obj.getX()][obj.getY()].setBackground(findPath);
             			dungeon[obj.getX()][obj.getY()] = 6;
             		}
-            		
+
             	}
 
             }
@@ -131,7 +131,7 @@ public class GUI implements ActionListener
             	for(int i = 0; i<dungeon.length; i++)
             	{
             		for(int j = 0; j < dungeon[i].length; j++)
-            		{     
+            		{
                         if(dungeon[i][j] == 3 || dungeon[i][j] == 4){//start and end points
                         	grid[i][j].setBackground(startEnd);
                         }
@@ -148,10 +148,10 @@ public class GUI implements ActionListener
             	}
             	grid[playerPositionY][playerPositionX].setBackground(player);
             }
-            
+
         });
-        
-        
+
+
         pane.add(button, c);
     }
 
@@ -236,7 +236,7 @@ public class GUI implements ActionListener
                             {
                                 grid[i][j].setBackground(path);
                             }
- 
+
                             else if (dungeon[i][j] == 0)
                             {
                                 grid[i][j].setBackground(wall);
