@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.util.Random;
 
 /**
  * Entity.java
@@ -20,17 +21,18 @@ public abstract class Entity
     private int mana;
     private int exp;
     private double ad;
-    private double ap;
-    private double mr;
     private Color color;
     private int level;
+    private Random rand;
 
     public Entity()
     {
         this.name = "???";
+        this.rand = new Random();
         setLevel(1);
         setHealth(getMaxHealth());
         setMana(getMaxMana());
+        
     }
     
     public Entity(String name, int level)
@@ -99,9 +101,9 @@ public abstract class Entity
         return health;
     }
 
-    public void setHealth(double health)
+    public void setHealth(int health)
     {
-        this.health = (int) Math.round(health);
+        this.health = health;
     }
 
     public int getMana()
@@ -134,24 +136,14 @@ public abstract class Entity
         this.ad = ad;
     }
 
-    public double getAp()
+    public int getAp()
     {
-        return ap;
+        return rand.nextInt(genStat(100)) + 1;
     }
-
-    public void setAp(double ap)
+    
+    public double getMp()
     {
-        this.ap = ap;
-    }
-
-    public double getMr()
-    {
-        return mr;
-    }
-
-    public void setMr(double mr)
-    {
-        this.mr = mr;
+    	return rand.nextInt(genStat(50)) + 1;
     }
 
     public Color getColor()
